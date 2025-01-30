@@ -1,0 +1,137 @@
+{%extends 'main/profile.html'%} {%load static%} {%block section%}
+<div style="height: 80vh">
+  <div style="margin: 40px 20px">
+    <h3 style="text-align: center; margin-top: 20px">
+      Apply For Floxix Loan
+    </h3>
+
+    <form
+      action=""
+      class="first_transfer_form_section"
+      style="display: flex; justify-content: center"
+    >
+      <div>
+        <label for="" style="font-weight: bold">Account In Account</label>
+        <div class="form-border" style="width: 100%">
+          <div
+            style="
+              display: flex;
+              gap: 20px;
+              align-items: center;
+              justify-content: space-between;
+            "
+          >
+            <div>
+              <i
+                class="fa-solid fa-dollar-sign fa-lg"
+                style="color: #ffd43b"
+              ></i>
+            </div>
+            <p style="margin: 0">
+              Checking Account (USD) <br />
+              <span style="font-size: 12px"
+                >Available Balance: USD {% for profile in user_profile %}{{
+                profile.amount }}{% endfor %}</span
+              >
+            </p>
+          </div>
+          <div><i class="fa-solid fa-arrow-down fa-2xs"></i></div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 40px">
+          <div>
+            <label> Credit Facility </label>
+            <select
+              class="form-border"
+              style="background-color: rgb(2, 32, 62); color: white"
+            >
+              <option>Select Loan/Credit Facility </option>
+              <option>no current loans</option>
+            </select>
+          </div>
+          <div>
+            <label> Repayment date </label>
+            <div class="form-border">
+              <input class="form-border-input" type="date" name="" id="" />
+            </div>
+          </div>
+        </div>
+        <label style="font-size: 16px; font-weight: bold"
+          >Loan Amount</label
+        >
+        <div class="form-border" style="width: 100%">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              width: 100%;
+            "
+          >
+            <input
+              class="form-border-input amount-input"
+              style="width: 100%"
+              name="amount"
+              placeholder="2000"
+              min="5"
+              required
+            />
+            <p>USD</p>
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-top: -15px;
+            font-size: 12px;
+          "
+        >
+          <p>Minimum: 150 USD</p>
+          <p>Maximum: 150,000 USD</p>
+        </div>
+
+        <div class="form-border" style="width: 100%">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: baseline;
+              width: 100%;
+            "
+          >
+          
+            <input
+              class="form-border-input"
+              style="width: 100%"
+              type="text"
+              name="description"
+              placeholder="Why do you want to take a loan?"
+            />
+            <p><i class="fa-solid fa-comment-dots"></i></p>
+          </div>
+        </div>
+        <button
+          type="submit"
+          style="margin-bottom: 100px; width: 100%"
+          id="blueButton"
+          class="btn btn-primary transfer-button"
+        >
+          Continue
+        </button>
+        <div class="modal fade" id="Processing" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <p>Processing your transfer...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{%endblock section%}

@@ -1,0 +1,862 @@
+.profile-body {
+  background-color: rgb(2, 32, 62);
+  color: white;
+  font-family: sans-serif;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+}
+
+.title {
+  width: 270px;
+}
+
+.first-profile-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid gray;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info > div {
+  background-color: rgb(120, 176, 250);
+  padding: 10px;
+  height: 40px;
+  width: 40px;
+  border-radius: 80%;
+  text-align: center;
+}
+
+.side-full-section {
+  min-width: 290px;
+  max-width: 290px;
+  padding-left: 20px;
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.first-profile-section > div:first-child {
+  border-right: 1px solid gray;
+  width: 255px;
+}
+
+.income-rates-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-right: 1px solid gray;
+  padding-top: 20px;
+  padding-right: 10px;
+}
+
+.income-rates-green {
+  padding: 0;
+  position: relative;
+}
+
+.income-rates-red {
+  padding: 0;
+  position: relative;
+}
+
+/* .latest-update {
+} */
+
+.fa-newspaper {
+  color: rgb(94, 168, 228);
+}
+
+.news-overview {
+  font-size: 12px;
+  color: rgb(188, 183, 183);
+}
+
+.connected {
+  color: rgb(29, 197, 29);
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.connected-name {
+  color: white;
+  font-size: 12px;
+}
+.bank-name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.bank-name-news {
+  display: none;
+}
+
+.bank-name-icon {
+  font-size: 20px;
+  font-weight: 700;
+  display: none;
+}
+
+.amount-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-right: 1px solid gray;
+}
+
+.available-balance {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.available-amount {
+  color: rgb(120, 176, 250);
+  font-size: 22px;
+  margin: 7px 0;
+}
+
+.currency-amount {
+  font-size: 16px;
+}
+
+.second-available-amount {
+  margin: 0;
+  font-size: 14px;
+}
+
+.fa-chart-simple {
+  border: 1px solid;
+  padding: 7px;
+  border-radius: 5px;
+  position: relative;
+  left: -10px;
+}
+
+.transaction-section {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  border-right: 1px solid gray;
+  padding-top: 20px;
+}
+
+.menu-list-section {
+  border-right: 1px solid gray;
+}
+
+.transfer-link {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 2px solid rgb(128, 190, 253);
+  border-radius: 5px;
+  display: inline-block;
+  background-color: rgb(20, 67, 177);
+}
+
+.bills-link {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 2px solid rgb(242, 221, 203);
+  border-radius: 5px;
+  display: inline-block;
+  background-color: rgb(177, 91, 20);
+}
+
+.menu {
+  font-size: 15px;
+  font-weight: bolder;
+  font-family: "Courier New", Courier, monospace;
+  margin: 0;
+  padding-top: 35px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 10px 0 0 0;
+  margin: 0;
+}
+
+.menu-list li a {
+  padding: 10px 0;
+  font-size: 16px;
+  color: white;
+  padding-left: 10px;
+  padding: 13px 15px;
+  margin-top: 5px;
+  text-decoration: none;
+}
+
+.fa-arrow-right {
+  padding-left: 60px;
+}
+
+.menu-list li i {
+  padding-right: 10px;
+}
+
+.menu-list li {
+  margin-right: 10px;
+  font-size: 18px;
+  color: white;
+  padding: 15px 0;
+}
+
+.menu-list li:nth-child(1) {
+  color: rgb(96, 139, 241);
+  background-color: rgb(2, 40, 77);
+  border-radius: 17px;
+  padding: 13px 1px;
+}
+
+.menu-list li:nth-child(2) {
+  color: rgb(96, 139, 241);
+  background-color: rgb(2, 40, 77);
+  border-radius: 17px;
+  padding: 13px 1px;
+  margin-top: 5px;
+}
+
+/* full section */
+.dashboard-height {
+  height: 100vh;
+  max-width: 1200px;
+  min-width: 100%;
+  /* overflow-y: scroll; */
+}
+.first_transfer_form_section {
+  height: 100vh;
+  max-width: 1200px;
+  min-width: 100%;
+  margin-left: 30px;
+}
+
+.border-form {
+  max-width: 1200px;
+  min-width: 100%;
+  margin-left: 30px;
+}
+
+.second-profile-section {
+  display: flex;
+}
+
+.welcome-greetings-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: fit-content;
+  margin: 23px 10px 0 10px;
+  padding: 30px;
+  align-items: center;
+  gap: 30px;
+}
+
+.welcome-greetings > h2 {
+  margin: 0;
+}
+
+.welcome-greetings > p {
+  font-size: 14px;
+  margin: 0;
+  padding-top: 7px;
+}
+
+.full-dashboard-transfer {
+  display: flex;
+}
+
+.profile-overview {
+  display: flex;
+  padding: 30px;
+  align-items: center;
+  background-color: rgb(20, 67, 177);
+  justify-content: space-between;
+  width: 430px;
+  border-radius: 5px;
+  height: 230px;
+}
+
+.user-details {
+  margin-right: 20px;
+}
+
+.user-details p:nth-child(1) {
+  font-size: 13px;
+  font-weight: bold;
+  color: rgb(177, 197, 243);
+}
+
+.user-details p:nth-child(2) {
+  font-size: 25px;
+  padding: 10px 0;
+}
+
+.user-details p:nth-child(3) {
+  font-size: 13px;
+  font-weight: bold;
+  color: rgb(177, 197, 243);
+}
+
+.user-details p:nth-child(4) {
+  font-size: 13px;
+  font-weight: bold;
+  padding-top: 20px;
+  color: rgb(177, 197, 243);
+}
+
+.user-details p:nth-child(5) {
+  font-size: 13px;
+  font-weight: bold;
+  color: white;
+  padding-top: 10px;
+}
+
+.user-details p {
+  margin: 0;
+}
+
+.last-login {
+  font-size: 13px;
+  font-weight: bold;
+  color: rgb(177, 197, 243);
+}
+
+.account-user-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+.checking-details {
+  display: flex;
+  justify-content: space-between;
+  width: 420px;
+  align-items: baseline;
+}
+
+.checking-details p {
+  color: rgb(54, 112, 247);
+  border-bottom: 2px solid rgb(54, 112, 247);
+}
+
+.checking-details-section {
+  width: 420px;
+  margin-top: 15px;
+}
+
+.checking-amount-detail {
+  background-color: rgb(2, 21, 41);
+  padding: 3px 15px;
+  border-radius: 5px;
+  width: 420px;
+}
+
+.checking-detail-amount {
+  background-color: rgb(2, 21, 41);
+  padding: 3px 15px;
+  border-radius: 5px;
+  width: 440px;
+}
+
+.checking-amount-detail-section {
+  display: flex;
+  gap: 10px;
+}
+
+.transaction-history {
+  display: flex;
+  justify-content: space-between;
+  width: 420px;
+  padding: 10px 15px;
+  margin-left: 20px;
+  align-items: center;
+  text-align: left;
+  border: 1px solid rgb(88, 87, 87);
+  background-color: rgb(2, 27, 52);
+  border-radius: 5px;
+}
+
+.transaction-history-grapg {
+  width: 420px;
+  padding: 0 15px;
+  margin-left: 20px;
+  align-items: center;
+  text-align: left;
+  border: 1px solid rgb(88, 87, 87);
+  background-color: rgb(2, 27, 52);
+}
+
+.transaction-history > div:nth-child(1) > p:nth-child(2) {
+  font-size: 12px;
+  margin: 0;
+  color: rgb(214, 224, 224);
+}
+
+.transaction-history > div:nth-child(1) > p:nth-child(3) {
+  font-size: 14px;
+  color: rgb(91, 135, 240);
+  margin: 0;
+  margin: 5px 5px;
+}
+
+.transaction-history > div:nth-child(2) > p:nth-child(1) {
+  font-size: 12px;
+  color: rgb(214, 224, 224);
+  margin: 5px 5px;
+}
+
+.text-green {
+  font-size: 12px;
+  color: rgb(79, 245, 50);
+  margin-top: 5px 5px;
+}
+
+.text-red {
+  font-size: 12px;
+  color: rgb(245, 137, 50);
+  margin-top: 5px 5px;
+}
+
+.transaction-history > div:nth-child(2) > p:nth-child(2) {
+  color: rgb(245, 137, 50);
+  margin: 0;
+  text-align: center;
+}
+
+.transaction-history > div:nth-child(3) > p:nth-child(2) {
+  color: rgb(210, 223, 255);
+  font-size: 12px;
+  border: 1px solid rgb(54, 112, 247);
+  padding: 3px 4px;
+  border-radius: 10px;
+  background-color: rgb(4, 50, 156);
+  margin: 0;
+}
+
+.transaction-history-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* chart */
+
+.pie {
+  font: 1.6vmin "Arial", sans-serif;
+  margin: 1.6vmin auto;
+  border-radius: 50%;
+  width: 30vmin;
+  height: 30vmin;
+  overflow: hidden;
+  z-index: +1;
+  position: relative;
+  background: linear-gradient(-10deg, #2196f3 50%, transparent 50%),
+    linear-gradient(to right, #2196f3 50%, #ffc107 50%);
+}
+
+.credit {
+  margin: 5vmin 0 0 17vmin;
+}
+
+.debit {
+  margin: 10vmin;
+}
+
+.last-section {
+  padding-top: 20px;
+  width: 100%;
+  padding: 0 15px;
+  margin-left: 20px;
+  margin-top: 20px;
+  align-items: center;
+  text-align: left;
+  border: 1px solid rgb(88, 87, 87);
+  background-color: rgb(2, 27, 52);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.last-section div:nth-child(2) > p {
+  font-size: 13px;
+}
+
+.fa-laptop {
+  font-size: 50px;
+  padding-left: 20px;
+}
+
+.support-link {
+  border: 2px solid #2196f3;
+  background-color: rgb(2, 32, 62);
+  padding: 4px 6px;
+  border-radius: 5px;
+}
+
+.support-link > a {
+  text-decoration: none;
+  color: #2196f3;
+}
+
+/* Chat Icon */
+.chat-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: auto;
+  height: 50px;
+  background-color: #2196f3;
+  color: white;
+  font-size: 18px;
+  padding: 0 15px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+.badge {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 80%;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: Hide badge if count is 0 */
+.badge.hidden {
+  display: none;
+}
+
+/* Chat Section */
+.chat-section {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: +2;
+}
+
+/* Chat Header */
+.chat-header {
+  background-color: #2196f3;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Chat Body */
+.chat-body {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  color: #1e88e5;
+}
+
+.chat-message {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background-color: #f1f1f1;
+  border-radius: 15px;
+  font-size: 14px;
+  width: fit-content;
+}
+
+/* Chat Footer */
+.chat-footer {
+  display: flex;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+}
+
+#chat-input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#send-btn {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#send-btn:hover {
+  background-color: #1e88e5;
+}
+
+/* first_transfer_form */
+
+.first_transfer_form {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.form-border {
+  border: 1.5px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 400px;
+  height: 60px;
+}
+
+.form-border-input {
+  background-color: rgb(2, 32, 62);
+  border: none;
+  color: white;
+  outline: none;
+  padding: 20px 0;
+  height: 20px;
+  font-size: 20px;
+}
+
+.form-border-input::placeholder {
+  color: white;
+  font-size: 20px;
+}
+
+.form-border-amount {
+  position: relative;
+  top: -40px;
+}
+
+.transfer-button {
+  background-color: #1e88e5;
+  border: none;
+  width: 400px;
+  height: 40px;
+  color: white;
+  border-radius: 5px;
+}
+
+.amount-input {
+  overflow-y: hidden;
+}
+
+.transaction-page {
+  width: 1000px;
+  overflow-y: scroll;
+}
+
+.first_transfer_section {
+  overflow-y: scroll;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 20px;
+  font-size: 15px;
+  text-align: left;
+  border: 1px solid #908c8c;
+}
+
+.transaction-table th {
+  background-color: #032556;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 12px;
+  border-top: 1px solid #908c8c;
+  border-bottom: 1px solid #908c8c;
+}
+
+.status.success {
+  color: rgb(79, 245, 50);
+}
+
+.status.pending {
+  color: #fb9b01;
+}
+
+.status.failed {
+  color: #e74c3c;
+}
+
+.check-section {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1021px) and (min-width: 768px) {
+  .side-full-section {
+    display: none;
+  }
+  .full-dashboard-section {
+    width: 100%;
+  }
+  .bank-name {
+    display: none;
+  }
+  .bank-name-icon {
+    display: block;
+  }
+  .first-profile-section > div:first-child {
+    width: 100px;
+  }
+  .account-user-details {
+    display: grid;
+    gap: 20px;
+  }
+  .transaction-history-section {
+    display: grid;
+    gap: 20px;
+  }
+  .last-section {
+    padding: 20px;
+    width: 100%;
+    padding: 10px 15px;
+    margin: 20px 20px;
+    align-items: center;
+    border: 1px solid rgb(88, 87, 87);
+    background-color: rgb(2, 27, 52);
+    display: flex;
+    gap: 20px;
+  }
+  .latest-update {
+    display: none;
+  }
+  .bank-name-news {
+    display: block;
+  }
+}
+
+/* For Mobile Devices (Below 768px) */
+@media (max-width: 767px) {
+  .side-full-section {
+    display: none;
+  }
+  .full-dashboard-section {
+    width: 100%;
+  }
+  .bank-name {
+    display: none;
+  }
+  .bank-name-icon {
+    display: block;
+  }
+  .first-profile-section > div:first-child {
+    width: 50px;
+  }
+  .profile-overview {
+    margin-left: 40px;
+    width: 400px;
+  }
+  .account-user-details {
+    width: 100%;
+  }
+  .transaction-history-section {
+    display: grid;
+    gap: 20px;
+    position: relative;
+    left: 20px;
+  }
+  .support-text {
+    display: none;
+  }
+  .last-section {
+    padding: 20px;
+    width: 100%;
+    padding: 10px 15px;
+    margin: 20px 20px;
+    align-items: center;
+    border: 1px solid rgb(88, 87, 87);
+    background-color: rgb(2, 27, 52);
+    display: flex;
+  }
+  .welcome-greetings-section {
+    height: fit-content;
+  }
+  .latest-update {
+    display: none;
+  }
+  .bank-name-news {
+    display: block;
+  }
+  .overview-text {
+    position: relative;
+    left: 20px;
+  }
+  .checking-details-section {
+    position: relative;
+    left: 20px;
+  }
+  .help-text {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+  .first_transfer_section {
+    margin: 20px;
+  }
+}

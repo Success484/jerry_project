@@ -1,0 +1,74 @@
+{%extends 'main/profile.html'%}
+{%load static%}
+{%block section%}
+<div class="first_transfer_form_section" style="width: 100%;">
+    <form class="first_transfer_form" style="width: 100%;" id="transferForm" action="{% url 'transaction_page' %}" method="post">
+        {% csrf_token %}
+        <div style="width: 100%; margin: 20px;">
+            <h3 style="text-align: center; margin-top: 20px;">Floxix Online Banking Check Debosite</h3>
+            <div style="text-align: center; margin-top: 15px;">
+                <i><small>You can deposite checks by snapping the front and back of the check</small></i>
+            </div>
+            <!-- Account Selection -->
+            <label for="" style="font-weight: bold;">Select Account</label>
+            <div class="form-border" style="width: 100%;">
+                <div style="display: flex; gap: 20px; align-items: center; justify-content: space-between;">
+                    <div><i class="fa-solid fa-dollar-sign fa-lg" style="color: #FFD43B;"></i></div>
+                    <p style="margin: 0;">Checking Account (USD) <br>
+                        <span style="font-size: 12px;">Available Balance: USD {% for profile in user_profile %}{{ profile.amount }}{% endfor %}</span>
+                    </p>
+                </div>
+                <div><i class="fa-solid fa-arrow-down fa-2xs"></i></div>
+            </div>
+
+            <label for="" style="font-weight: bold;">Check Ammount</label>
+            <div class="form-border" style="width: 100%;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; width: 100%;">
+                    <input class="form-border-input" style="width: 100%;" type="text" name="check_ammount" placeholder="2000">
+                    <p><i class="fa-solid fa-comment-dots"></i></p>
+                </div>
+            </div>
+            <div class="check-section">
+                <div>
+                    <p>Front of the check</p>
+                    <div style="font-size: xx-large; font-weight: bolder; width: 420px; height: 210px; background-color: antiquewhite; color: gray; display: flex; justify-content: center; align-items: center;">
+                        <p>640x480</p>
+                    </div>                    
+                    <div>
+                        <input required type="file" style="width: 420px; border: 1px solid gray; margin: 10px 0; padding: 10px; border-radius: 8px;" name="" id="">
+                    </div>
+                </div>
+                <div>
+                    <p>Back of the check</p>
+                    <div style="font-size: xx-large; font-weight: bolder; width: 420px; height: 210px; background-color: antiquewhite; color: gray; display: flex; justify-content: center; align-items: center;">
+                        <p>640x480</p>
+                    </div>
+                    <div>
+                        <input required type="file" style="width: 420px; border: 1px solid gray; margin: 10px 0; padding: 10px; border-radius: 8px;" name="" id="">
+                    </div>
+                </div>
+            </div>
+            <!-- Submit Button -->
+            <button type="submit" id="blueButton" style="width: 100%; margin-top: 10px;" class="btn btn-primary transfer-button">Submit</button>
+            <div class="modal fade" id="Processing" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <p>Processing your transfer...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <i><small>Note: our flash fund fee will be deducted from your account following the completion of this deposite</small></i>
+            </div>
+            <div style="position: relative; top: 0; display: flex; justify-content: center; margin-top: 30px;">
+                <p>@ 2025 Floxix - All Rights Reserved</p>
+            </div>
+        </div>
+    </form>
+</div>
+{%endblock section%}

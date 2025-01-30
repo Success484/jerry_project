@@ -1,0 +1,40 @@
+fetch("https://api.ipify.org?format=json")
+  .then((response) => response.json())
+  .then((data) => {
+    const ip = data.ip;
+    document.getElementById("ip-address").textContent = ip;
+
+    // Fetch additional info, such as country code, using ipapi.co
+    return fetch(`https://ipapi.co/${ip}/json/`);
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.country_code) {
+      // Set the country flag using the country code
+      const flagUrl = `https://flagcdn.com/w40/${data.country_code.toLowerCase()}.png`;
+      document.getElementById("country-flag").src = flagUrl;
+      document.getElementById("country-flag").alt = data.country_name;
+    } else {
+      document.getElementById("country-flag").alt = "Country flag unavailable";
+    }
+  })
+  .catch((error) => {
+    console.error("Error fetching country details:", error);
+    document.getElementById("ip-address").textContent = "Unable to retrieve IP";
+  });
+
+// Select elements
+const chatIcon = document.getElementById("chat-icon");
+const chatSection = document.getElementById("chat-section");
+const closeChat = document.getElementById("close-chat");
+
+// Show chat section when the chat icon is clicked
+chatIcon.addEventListener("click", () => {
+  chatSection.style.display = "flex";
+});
+
+// Hide chat section when the close button is clicked
+closeChat.addEventListener("click", () => {
+  chatSection.style.display = "none";
+});
+

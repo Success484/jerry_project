@@ -1,0 +1,104 @@
+{%extends 'main/profile.html'%}
+{%load static%}
+{%block section%}
+<div class="first_transfer_form_section">
+    <form class="first_transfer_form" id="transferForm" action="{% url 'transaction_page' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <h3 style="text-align: center; margin-top: 20px;">Floxix Online Banking Transfer</h3>
+            <!-- Account Selection -->
+            <label for="" style="font-weight: bold;">Select Account</label>
+            <div class="form-border">
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div><i class="fa-solid fa-dollar-sign fa-lg" style="color: #FFD43B;"></i></div>
+                    <p style="margin: 0;">Checking Account (USD) <br>
+                        <span style="font-size: 12px;">Available Balance: USD {% for profile in user_profile %}{{ profile.amount }}{% endfor %}</span>
+                    </p>
+                </div>
+                <div><i class="fa-solid fa-arrow-down fa-2xs"></i></div>
+            </div>
+    
+            <!-- Account Number -->
+            <label for="" style="font-weight: bold;">Account Number</label><br>
+            <div class="form-border">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; width: 400px;">
+                    <input class="form-border-input" type="text" name="account_number" placeholder="Recipient account number:" required>
+                    <p><i class="fa-solid fa-hashtag"></i></p>
+                </div>
+            </div>
+    
+            <!-- Amount to Transfer -->
+            <div class="form-border-amount" style="margin-top: 60px;">
+                <label style="font-size: 16px; font-weight: bold;">Amount to Transfer</label>
+                <div style="margin-bottom: -20px; font-size: 14px; display: flex; justify-content: space-between;">
+                    <p>Daily Transfer Limit</p>
+                    <p>USD0.00 OF USD5,000,000.00</p>
+                </div>
+                <div class="form-border">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; width: 400px;">
+                        <input class="form-border-input amount-input" name="amount" placeholder="2000" min="5" required>
+                        <p>USD</p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: -15px; font-size: 12px;">
+                    <p>Minimum: 5.00 USD</p>
+                    <p>1 USD = 1 USD</p>
+                </div>
+    
+                <!-- Bank Name -->
+                <div class="form-border">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; width: 400px;">
+                        <input class="form-border-input" type="text" name="bank_name" placeholder="Bank name:" required>
+                        <p><i class="fa-solid fa-file-signature"></i></p>
+                    </div>
+                </div>
+    
+                <!-- Description -->
+                <div class="form-border">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; width: 400px;">
+                        <input class="form-border-input" type="text" name="description" placeholder="Description (optional):">
+                        <p><i class="fa-solid fa-comment-dots"></i></p>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Transaction PIN -->
+            <div class="form-group" style="margin-top: -30px;">
+                <label for="transactionPin" style="font-weight: bold;">Transaction PIN</label>
+                <div class="form-border">
+                    <input 
+                        class="form-border-input" 
+                        type="password" 
+                        name="transaction_pin" 
+                        id="transactionPin" 
+                        maxlength="4" 
+                        placeholder="Enter 4-digit PIN" 
+                        required 
+                        pattern="\d{4}" 
+                        title="PIN must be 4 numeric digits."
+                    >
+                </div>
+                <small class="form-text text-muted">Your PIN is required to complete the transfer.</small>
+            </div>
+    
+            <!-- Submit Button -->
+            <button type="submit" id="blueButton" class="btn btn-primary transfer-button">Continue to Next Step</button>
+            <div class="modal fade" id="Processing" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <p>Processing your transfer...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative; top: 0; display: flex; justify-content: center; margin-top: 30px;">
+                <p>@ 2025 Floxix - All Rights Reserved</p>
+            </div>
+        </div>
+    </form>
+</div>
+{%endblock section%}

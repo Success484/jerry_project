@@ -1,0 +1,93 @@
+{%extends 'main/profile.html'%} 
+{%load static%} 
+{%block section%}
+<div style="height: 80vh; margin: 10px 20px">
+  <div class="welcome-greetings-section">
+    <div class="welcome-greetings">
+      <h2>Manage Digital Assets.</h2>
+      <p>
+        Floxix Crypto assets management tool enables users to tie in multiple
+        crypto accounts and wallets so that they can easily keep an eye on all
+        of their cryptocurrency holdings using a single dashboard.
+      </p>
+    </div>
+    <div class="full-dashboard-transfer">
+      <div>
+        <a
+          class="bills-link"
+          style="
+            background-color: gray;
+            border: 2px solid rgb(235, 233, 233);
+            margin-left: 10px;
+            color: white;
+          "
+          href="{% url 'crypto_deposite' %}"
+        >
+          crypto Currencies
+          <i class="fa-brands fa-btc"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <form action="" style="width: 100%">
+    <h2 style="text-align: center; margin-top: 20px">
+      which Crypto Asset will you <br />like to Deposite?
+    </h2>
+    <label> Choose Your Preffered Asset </label>
+    <select
+      class="form-border"
+      style="background-color: rgb(2, 32, 62); color: white; width: 100%"
+    >
+      <option>Choose Crypto Asset</option>
+      <option>Bitcoin (BTC)</option>
+      <option>XRP (XRP)</option>
+      <option>Ethereum (ETH)</option>
+      <option>Tether (USDT)</option>
+    </select>
+    <label style="font-size: 16px; font-weight: bold">Amount to Deposit</label>
+    <div class="form-border" style="width: 100%">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          width: 100%;
+        "
+      >
+        <input
+          class="form-border-input amount-input"
+          style="width: 100%"
+          name="amount"
+          placeholder="2000"
+          min="5"
+          required
+        />
+        <p>USD</p>
+      </div>
+    </div>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        margin-top: -15px;
+        font-size: 12px;
+      "
+    >
+      <p>Minimum: 10.00 USD</p>
+    </div>
+    <button type="submit" style="margin-bottom: 100px; width: 100%;" id="blueButton" class="btn btn-primary transfer-button">Continue</button>
+    <div class="modal fade" id="Processing" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-body text-center">
+                  <div class="spinner-border text-primary" role="status">
+                      <span class="sr-only">Loading...</span>
+                  </div>
+                  <p>Processing your transfer...</p>
+              </div>
+          </div>
+      </div>
+  </div>
+  </form>
+</div>
+{%endblock section%}

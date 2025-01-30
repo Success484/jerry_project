@@ -1,0 +1,116 @@
+{%extends 'main/profile.html'%}
+{%load static%}
+{%block section%}
+<div class="first_transfer_form_section">
+    <table class="transaction-table">
+        <thead>
+            <tr>
+              <th class="table-header">
+                <span>Ref</span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </th>
+              <th class="table-header">
+                <span>Type</span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </th>
+              <th class="table-header">
+                <span>Scope</span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </th>
+              <th class="table-header">
+                <span>Amount</span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </th>
+              <th class="table-header">
+                <span>Date</span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </th>
+              <th class="table-header">
+                <span>Description</span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </th>
+              <th class="table-header">
+                <span>Status</span>
+                <i class="fa-solid fa-arrows-up-down"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if tranfers %}
+              {% for tranfer in tranfers %}
+                <tr>
+                  <td>{{ tranfer.account_number }}</td>
+                  <td>{{ tranfer.transaction_type }}</td>
+                  <td>{{ tranfer.transaction_scope }}</td>
+                  <td>${{ tranfer.amount }}</td>
+                  <td>{{ tranfer.transfer_date }}</td>
+                  <td>{{ tranfer.description }}</td>
+                  <td style="font-size: 18px;" class="{% if tranfer.transaction_info == 'Completed' %}text-green{% else %}text-red{% endif %}">
+                    {{ tranfer.transaction_info }}
+                  </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+            {% endif %}
+          </tbody>
+          
+        <tbody>
+          <tr>
+            <td>1234567890</td>
+            <td>Debit</td>
+            <td>Local Transfer</td>
+            <td>$500</td>
+            <td>Jan. 27, 2024</td>
+            <td>Monthly Savings Deposit</td>
+            <td class="status success"  style="font-size: 18px;">Completed</td>
+          </tr>
+          <tr>
+            <td>9876543210</td>
+            <td>Credit</td>
+            <td>Local Transfer</td>
+            <td>$200</td>
+            <td>Jan. 27, 2024</td>
+            <td>Office Rent Payment</td>
+            <td class="status success" style="font-size: 18px;">Completed</td>
+          </tr>
+          <tr>
+            <td>1122334455</td>
+            <td>Credit</td>
+            <td>International Transfer</td>
+            <td>$750</td>
+            <td>Jan. 27, 2024</td>
+            <td>Payment to Supplier</td>
+            <td class="status success"  style="font-size: 18px;">Completed</td>
+          </tr>
+          <tr>
+            <td>6677889900</td>
+            <td>Credit</td>
+            <td>Check Deposite</td>
+            <td>$1,000</td>
+            <td>Jan. 27, 2023</td>
+            <td>Child Health Care</td>
+            <td class="status success" style="font-size: 18px;">Completed</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination-container" style="margin-bottom: 30px; display: flex; margin-left: 20px;">
+        {% if tranfers.has_previous %}
+          <a href="?page={{ tranfers.previous_page_number }}" class="pagination-button" style="border: 1px solid gray; padding: 10px;">Prev</a>
+        {%else%}
+        <a href="#" class="pagination-button" style="border: 1px solid gray; padding: 10px; color: white;">Prev</a>
+        {% endif %}
+
+        {% for page_num in tranfers.paginator.page_range %}
+          <a href="?page={{ page_num }}" class="pagination-button" style="border: 1px solid gray; padding: 10px; color: white;">
+            {{ page_num }}
+          </a>
+        {% endfor %}
+
+        {% if tranfers.has_next %}
+          <a href="?page={{ tranfers.next_page_number }}" class="pagination-button" style="border: 1px solid gray; padding: 10px;">Next</a>
+        {%else%}
+          <a href="#" class="pagination-button" style="border: 1px solid gray; padding: 10px; color: white;">Next</a>  
+        {% endif %}
+      </div>
+</div>
+{%endblock section%}

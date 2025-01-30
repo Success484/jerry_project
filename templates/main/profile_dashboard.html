@@ -1,0 +1,187 @@
+{%extends 'main/profile.html'%}
+{%load static%}
+{%block section%}
+<div id="chat-icon" class="chat-icon">
+  Chat 💬
+  {%if unread_count%}
+  <span id="unread-count" class="badge">{{ unread_count }}</span>
+  {%else%}
+  {%endif%}
+</div>
+
+<!-- Chat Section -->
+<form method="POST" action="{% url 'profile' %}">
+  {% csrf_token %}
+  <div id="chat-section" class="chat-section">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <span>Chat with Us</span>
+      <button id="close-chat" class="close-btn">&times;</button>
+    </div>
+
+    <!-- Chat Body -->
+    <div class="chat-body">
+      <div class="chat-message">
+        service: Hello! How can we assist you today?
+      </div>
+      {% for message in all_messages %}
+      <div class="chat-message">
+        {{ message.message }}
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Chat Footer -->
+    <div class="chat-footer">
+      <input name="message" type="text" id="chat-input" placeholder="Type a message..." class="form-control">
+      <button id="send-btn" class="btn btn-primary">Send</button>
+    </div>
+  </div>
+</form>
+  
+<div class="dashboard-height">
+    <div class="welcome-greetings-section">
+        <div class="welcome-greetings">
+          <h2>Good Day {{request.user.first_name}} {{request.user.last_name}}</h2>
+          <p>At a glance summary of your account!</p>
+        </div>
+        <div class="full-dashboard-transfer">
+          <div>
+            <a class="transfer-link" style="color: white;" href="#">
+              <i class="fa-solid fa-money-bill-1"></i> Deposit
+              <i class="fa-solid fa-arrow-right fa-2xs"></i>
+            </a>
+          </div>
+          <div>
+            <a
+              class="bills-link"
+              style="background-color: gray; border: 2px solid rgb(235, 233, 233); margin-left: 10px; color: white;"
+              href="{% url 'transaction_page' %}"
+            >
+              <i class="fa-solid fa-scroll"></i> Transfer Fund
+              <i class="fa-solid fa-arrow-right fa-2xs"></i>
+            </a>
+        </div>
+        </div>
+    </div>
+    <div class="account-user-details">
+       <div>
+           <h3 class="overview-text" style="padding: 30px 0 10px 20px; margin: 0;">Overview</h3>
+           <div class="profile-overview">
+               <div>
+                   <img src="{{ user.profile.image.url }}" height="70" width="70" style="border-radius: 50%; margin-bottom: 10px;" alt="">
+                   <div>
+                       <p class="last-login"><span style="color: rgb(113, 156, 255);">Last Login</span> <br> {{request.user.last_login}}</p>
+                   </div>
+               </div>
+               <div class="user-details">
+                   <p>Available Balance</p>
+                   {% for profile in user_profile %}
+                   <p>USD {{profile.amount}}</p>
+                   {%endfor%}
+                   <p>{{request.user.first_name}} {{request.user.last_name}}</p>
+                   <p>Your IP Address</p>
+                   <p class="ip-container">
+                       <img src="{%static ''%}" alt="Country Flag" id="country-flag" style="width: 20px; height: 10px;">
+                       <span id="ip-address">Loading...</span>
+                    </p>
+               </div>
+           </div>
+        </div>
+       <div class="checking-details-section">
+           <div class="checking-details">
+               <h3 style="padding: 20px 0 10px 20px; margin: 0;">Checking Account</h3>
+               <p>Transfer Fund</p>
+           </div>
+           <div class="checking-amount-detail">
+               <p style="font-size: 13px; margin-top: 5px;"><i class="fa-solid fa-coins"></i> *****53260</p>
+               <p style="font-size: 13px;">{% for profile in user_profile %}{{profile.amount}}{%endfor%} USD</p>
+            </div>
+            <div class="checking-details">
+               <h3 style="padding: 20px 0 10px 20px; margin: 0; font-size: 14px;">Loans and lines of credit</h3>
+               <p style="font-size: 14px;">Pay bills</p>
+            </div>
+           <div class="checking-amount-detail-section">
+               <div class="checking-detail-amount">
+                   <p style="font-size: 13px; margin-top: 5px;"><i class="fa-solid fa-coins"></i> Business Support Loan</p>
+                   <p style="font-size: 13px;">+4000 USD</p>
+               </div>
+               <div class="checking-detail-amount">
+                   <p style="font-size: 13px; margin-top: 5px;"><i class="fa-solid fa-coins"></i> FICO Credit Score</p>
+                   <p style="font-size: 13px;">750 <span style="background-color: greenyellow; height: 20px; width: 50px; border-radius: 50%;"><span style="visibility: hidden;">e3</span></span></p>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div>
+      <div class="transaction-history-section">
+        <div>
+        <div class="checking-details" style="margin-top: 20px;">
+            <h3 style="padding: 30px 0 10px 20px; margin: 0;">Recent Transaction Activities</h3>
+            <p style="color: aliceblue;">All</p>
+         </div>
+        {% if tranfers %}
+          {% for tranfer in tranfers %}
+            <div class="transaction-history">
+              <div>
+                <p>{{ tranfer.account_number }} <i class="fa-solid fa-wallet"></i></p>
+                <p>{{ tranfer.transfer_date }}</p>
+                <p>{{ tranfer.description }}</p>
+              </div>
+              <div>
+                <p>Amount</p>
+                <p>- {{ tranfer.amount }} USD</p>
+                <p class="{% if tranfer.transaction_info == 'Completed' %}text-green{% else %}text-red{% endif %}">
+                  {{ tranfer.transaction_info }}
+                </p>
+              </div>
+              <div>
+                <p>{{ tranfer.transaction_type }}</p>
+                <p>View Details</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="transaction-history" style="color: white;">No history yet</p>
+        {% endif %}
+      </div>
+      
+       <div style="margin-top: 55px;">
+         <div style="height: 385px; border-bottom: none; border-radius: 5px;" class="transaction-history-grapg">
+             <div class="checking-details">
+             <h3 style="padding: 10px 0 10px 0; margin: 0;">Balance Flow</h3>
+           </div>
+           <div style="margin: 0; font-size: 12px;">
+               <p>Credit <span style="background-color: #ffc107; border-radius: 30%;"><span style="visibility: hidden;">2,</span></span></p>
+             <p>Debit <span style="background-color: #2196f3; border-radius: 30%;"><span style="visibility: hidden;">2,</span></span></p>
+           </div>
+           <div class="pie">
+             <div class="credit" style="color: black;"><span style="color: white;">30.77%</span><br> Credit</div>
+             <div class="debit" style="color: black;"><span style="color: white;">70.23%</span><br> Debit</div>
+           </div>
+         </div>
+         <div style="position: relative; top: -90px; height: 200px; border-top: none; border-radius: 5px; padding-top: 5px;" class="transaction-history">
+           <svg style="height: 200px; position: relative; right: -20px;" class="uch-psvg" viewBox="0 0 250.0 140.0" preserveAspectRatio="none" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><defs><linearGradient id="chart-grad-_DouPZ_KkJ8KZkdUPjeTJkA4_51" x1="0%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#34a853" stop-opacity="0.38"></stop><stop offset="13%" stop-color="#e6f4ea" stop-opacity="0"></stop></linearGradient></defs><clipPath id="mask-_DouPZ_KkJ8KZkdUPjeTJkA4_50"><rect height="150" width="250" x="0" y="-5"></rect></clipPath></defs><path clip-path="url(#mask-_DouPZ_KkJ8KZkdUPjeTJkA4_50)" d="M 0 80.43 L 11.9 129.99 L 23.81 135.38 L 35.71 128.94 L 47.62 82.11 L 59.52 101.5 L 71.43 114.94 L 83.33 101.5 L 95.24 100.94 L 107.14 128.1 L 119.05 117.46 L 130.95 136.5 L 142.86 128.38 L 154.76 90.86 L 166.67 63.21 L 178.57 75.81 L 190.48 60.97 L 202.38 35 L 214.29 2.8 L 226.19 50.05 L 238.1 29.05 L 250 55.37 L 2000 0 L 2000 1000 L -1000 1000" stroke="#34a853" style="fill:url(#chart-grad-_DouPZ_KkJ8KZkdUPjeTJkA4_51)"></path></svg>           </div>
+         </div>
+         
+
+       </div>
+       <div style="display: flex; justify-content: center;">
+         <div style="position: relative; top: -90px; border-radius: 5px;" class="last-section">
+           <div><i class="fa-solid fa-laptop fa-2xl"></i></div>
+           <div>
+             <h5 class="help-text" style="padding-top: 10px;">We're here to help you!</h4>
+              <p class="support-text">Ask a question or file a support ticket, manage request, report and issues. Our support team will get <br> back to you by email</p>
+            </div>
+            <div class="support-link">
+              <a href="#">Get a Support Now</a>
+            </div>
+          </div>
+        </div>
+        <!-- chat -->
+        <div style="display: flex; justify-content: center; position: relative; top: -70px;">
+            <p>@ 2025 Floxix - All Rights Reserved</p>
+        </div>
+    </div>
+</div>
+{%endblock section%}

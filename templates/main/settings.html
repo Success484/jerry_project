@@ -1,0 +1,71 @@
+{%extends 'main/profile.html'%}
+{%load static%}
+{%block section%}
+<div style="height: 80vh;">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; border-bottom: 1px solid gray; padding: 20px;">
+        <div>
+            <div><strong>Save my activity log</strong></div>
+            <p style="font-size: 14px; color: gainsboro;">You can save all your activity logs including unusual activity dectected.</p>
+        </div>
+        <div>
+            <span style="font-size: 14px; color: rgb(84, 127, 227); margin-right: 10px;">See rencent activity</span>
+            <span><i class="fa-solid fa-toggle-off fa-2xl"></i></span>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; border-bottom: 1px solid gray; padding: 20px;">
+        <div>
+            <div><strong>Security pin code</strong></div>
+            <p style="font-size: 14px; color: gainsboro;">You can set your pin code, We will ask you this code during the login attempts and transactions</p>
+        </div>
+        <div>
+            <span><i class="fa-solid fa-toggle-on fa-2xl" style="color: #63E6BE;"></i></span>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; border-bottom: 1px solid gray; padding: 20px;">
+        <div>
+            <div><strong>2FA Authentication</strong> <span style="background-color: #63E6BE; color: white; padding: 2px; border-radius: 5px;">Enabled</span></div>
+            <p style="font-size: 14px; color: gainsboro;">Secure your account with 2FA security, When it is activated you need to enter not only your password but also a special code using 2FA app. You can receive this code by in mobile app</p>
+        </div>
+    </div>
+    <table class="transaction-table">
+        <thead>
+            <tr>
+                <th class="table-header">
+                    <span>Browser</span>
+                </th>
+                <th class="table-header">
+                    <span>IP</span>
+                </th>
+                <th class="table-header">
+                    <span>Time</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Google Chrome</td>
+                <td>192.168.1.101</td>
+                <td>2025-01-28 14:35:22</td>
+            </tr>
+            <tr>
+                <td>Mozilla Firefox</td>
+                <td>203.45.67.89</td>
+                <td>2024-01-25 09:20:15</td>
+            </tr>
+            <tr>
+                <td>Safari</td>
+                <td>178.62.14.220</td>
+                <td>2024-01-28 21:10:45</td>
+            </tr>
+            <tr>
+                <td>Microsoft Edge</td>
+                <td>154.90.32.67</td>
+                <td>2024-01-28 11:55:30</td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
+{%endblock section%}

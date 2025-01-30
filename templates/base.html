@@ -1,0 +1,258 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <!-- site metas -->
+    <title>Cial</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- bootstrap css -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@3.1.8/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/bootstrap.min.css' %}"
+    />
+
+    <!-- Custom style CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="{% static 'images/fevicon.png' %}"
+      type="image/gif"
+    />
+
+    <!-- Scrollbar Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/jquery.mCustomScrollbar.min.css' %}"
+    />
+
+    <!-- Font Awesome (external) -->
+    <link
+      rel="stylesheet"
+      href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+    />
+
+    <!-- Owl carousel CSS -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/owl.theme.default.min.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
+      media="screen"
+    />
+  </head>
+  <body>
+    <!--header section start -->
+    <div class="header_section">
+      <div class="header_left">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <!-- <div class="logo"><a href="index.html"><img src="{% static 'images/logo.png' %}"></a></div> -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" style="display: flex">
+              <li
+                class="nav-item"
+                style="
+                  background-color: red;
+                  padding: 0px 8px;
+                  border-radius: 8px;
+                  height: 55px;
+                "
+              >
+                <a
+                  class="nav-link"
+                  href="{% url 'home' %}"
+                  style="
+                    color: white;
+                    font-size: 16px;
+                    padding: 0;
+                    position: relative;
+                    bottom: -12px;
+                    padding-left: 3px;
+                    padding-left: 3px;
+                    width: 200px;
+                  "
+                  ><i class="fa-solid fa-lock"></i><span style="padding-left: 10px;">FLOXIX BANKING</span></a
+                >
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'services' %}">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'team' %}">Team</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              </li>
+              <li
+                class="nav-item"
+                style="
+                  background-color: green;
+                  padding: 4px 8px;
+                  border-radius: 8px;
+                "
+              >
+                <a
+                  class="nav-link"
+                  href="{% url 'login' %}"
+                  style="
+                    color: white;
+                    font-size: 16px;
+                    padding: 0;
+                    position: relative;
+                    bottom: -10px;
+                    width: 170px;
+                    text-align: center;
+                  "
+                  ><i class="fa-solid fa-user-tie"></i> Access acount</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <!--header section end -->
+
+    {%block content%} {%endblock content%}
+
+    <!--footer section start -->
+    <div class="footer_section layout_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-sm-6">
+            <h4 class="about_text">About Financial</h4>
+            <div class="location_text">
+              <img src="{% static 'images/map-icon.png' %}" alt="Map Icon" />
+              <span class="padding_left_15">uk</span>
+            </div>
+            <div class="location_text">
+              <img src="{% static 'images/call-icon.png' %}" alt="Call Icon" />
+              <span class="padding_left_15">+01 9876543210</span>
+            </div>
+            <div class="location_text">
+              <img src="{% static 'images/mail-icon.png' %}" alt="Mail Icon" />
+              <span class="padding_left_15">demo@gmail.com</span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <h4 class="about_text">About Our Banking Services</h4>
+            <p class="dolor_text">
+              We offer comprehensive financial services to help you manage your wealth.
+            </p>
+        </div>        
+          <div class="col-lg-3 col-sm-6">
+            <h4 class="about_text">Newsletter</h4>
+            <input
+              type="text"
+              class="mail_text"
+              placeholder="Enter your email"
+              name="Enter your email"
+            />
+            <div class="subscribe_bt"><a href="#">Subscribe</a></div>
+            <div class="footer_social_icon">
+              <ul>
+                <li>
+                  <a href="#"
+                    ><img
+                      src="{% static 'images/fb-icon1.png' %}"
+                      alt="Facebook Icon"
+                  /></a>
+                </li>
+                <li>
+                  <a href="#"
+                    ><img
+                      src="{% static 'images/twitter-icon1.png' %}"
+                      alt="Twitter Icon"
+                  /></a>
+                </li>
+                <li>
+                  <a href="#"
+                    ><img
+                      src="{% static 'images/linkedin-icon1.png' %}"
+                      alt="LinkedIn Icon"
+                  /></a>
+                </li>
+                <li>
+                  <a href="#"
+                    ><img
+                      src="{% static 'images/youtub-icon1.png' %}"
+                      alt="YouTube Icon"
+                  /></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- copyright section start -->
+        <div class="copyright_section">
+          <div class="copyright_text">
+            Copyright 2025 All Rights Reserved by
+            <a href="https://www.yourbankwebsite.com">Your Trusted Bank</a>
+        </div>        
+        </div>
+        <!-- copyright section end -->
+      </div>
+    </div>
+    <!--footer section end -->
+    <!-- Javascript files-->
+    <script src="https://kit.fontawesome.com/6f961eaa51.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'js/plugin.js' %}"></script>
+
+    <!-- Sidebar -->
+    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <!-- Owl Carousel -->
+    <script src="{% static 'js/owl.carousel.js' %}"></script>
+
+    <!-- Fancybox (external) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  </body>
+</html>

@@ -155,6 +155,23 @@
         $('#loadingModal').modal('hide');
         $('#successModal').modal('show');
     }, 8000); // 8000 milliseconds = 4 seconds
+
+    document.addEventListener("DOMContentLoaded", () => {
+  const toggleButton = document.getElementById("toggle-sidebar");
+  const sidebar = document.getElementById("side-full-section");
+
+  if (toggleButton) {
+    toggleButton.addEventListener("click", () => {
+      if (sidebar.style.display === "none" || sidebar.style.display === "") {
+        sidebar.style.display = "block";
+      } else {
+        sidebar.style.display = "none";
+      }
+    });
+  } else {
+    console.error("Toggle button not found");
+  }
+});
   </script>
 
 </body>

@@ -20,7 +20,7 @@
   <div class="first-profile-section">
     <div class="title">
       <p class="bank-name">FLOXIX</p>
-      <p class="bank-name-icon" id="toggle-sidebar"><i class="fa-solid fa-bars"></i></p>
+      <p class="bank-name-icon" style="cursor: pointer;" id="toggle-sidebar"><i class="fa-solid fa-bars fa-lg"></i></p>
     </div>
     <div class="latest-update-container">
       <p class="latest-update">
@@ -155,23 +155,6 @@
         $('#loadingModal').modal('hide');
         $('#successModal').modal('show');
     }, 8000); // 8000 milliseconds = 4 seconds
-
-  document.addEventListener("DOMContentLoaded", () => {
-  const toggleButton = document.getElementById("toggle-sidebar");
-  const sidebar = document.getElementById("side-full-section");
-
-  if (toggleButton) {
-    toggleButton.addEventListener("click", () => {
-      if (sidebar.style.display === "none" || sidebar.style.display === "") {
-        sidebar.style.display = "block";
-      } else {
-        sidebar.style.display = "none";
-      }
-    });
-  } else {
-    console.error("Toggle button not found");
-  }
-});
   </script>
 
 </body>

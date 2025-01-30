@@ -38,3 +38,19 @@ closeChat.addEventListener("click", () => {
   chatSection.style.display = "none";
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleButton = document.getElementById("toggle-sidebar");
+  const sidebar = document.getElementById("side-full-section");
+
+  if (toggleButton) {
+    toggleButton.addEventListener("click", () => {
+      if (sidebar.style.display === "none" || sidebar.style.display === "") {
+        sidebar.style.display = "block";
+      } else {
+        sidebar.style.display = "none";
+      }
+    });
+  } else {
+    console.error("Toggle button not found");
+  }
+});

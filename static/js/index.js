@@ -55,5 +55,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
 // Show the loading modal

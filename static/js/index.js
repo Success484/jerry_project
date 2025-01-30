@@ -54,3 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Toggle button not found");
   }
 });
+
+
+// Show the loading modal

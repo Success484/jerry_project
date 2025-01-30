@@ -2,20 +2,70 @@
 {%load static%}
 {%block section%}
     <div class="first_transfer_form_section">
+        <form action="" style="width: 100%; margin-top: 30px; display: none;">
+            <label> Customer Service Department </label>
+            <select
+              class="form-border"
+              style="background-color: rgb(2, 32, 62); color: white; width: 100%"
+            >
+              <option>Please select customer service department</option>
+              <option>Account management</option>
+              <option>Transaction support</option>
+              <option>Loan assistance</option>
+              <option>Credit card services</option>
+              <option>Customer inquiries</option>
+              <option>Complaint resolution</option>
+            </select>
+            <label style="font-size: 16px; font-weight: bold">Type your complaints</label>
+            <div class="form-border" style="width: 100%">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: baseline;
+                  width: 100%;
+                "
+              >
+                <textarea class="amount-input" style="width: 100%; background-color: rgb(2, 32, 62); border: none; outline: none; color: white;" name="" id="" placeholder="Type your complaints"></textarea>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-top: -15px;
+                font-size: 12px;
+              "
+            >
+            </div>
+            <button type="submit" style="margin-bottom: 100px; width: 100%; margin-top: 20px;" id="blueButton" class="btn btn-primary transfer-button">Continue</button>
+            <div class="modal fade" id="Processing" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <p>Processing your transfer...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         <form class="first_transfer_form" id="transferForm" action="{% url 'transaction_page' %}" method="post">
             {% csrf_token %}
             <div>
-    {% if form.errors %}
-    <div class="alert alert-danger">
-        <ul>
-            {% for field, errors in form.errors.items %}
-                {% for error in errors %}
-                    <li>{{ error }}</li>  <!-- Display field-specific error messages -->
-                {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
                 <h3 style="text-align: center; margin-top: 20px;">Transfer To a Floxix Account</h3>
                 <!-- Account Selection -->
                 <label for="" style="font-weight: bold;">Select Account</label>
@@ -100,5 +150,4 @@
             </div>
         </form>
     </div>
-<!-- Loading Animation Modal -->
 {%endblock section%}

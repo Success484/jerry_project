@@ -227,8 +227,10 @@ def check_deposite(request):
 @login_required
 def pay_bill(request):
     user_profile = Profile.objects.filter(user=request.user)
+    u_profile = Profile.objects.get(user=request.user)
     context = {
         'user_profile': user_profile,
+        'u_profile': u_profile
     }
     return render(request, 'main/pay_bill.html', context)
 
@@ -272,8 +274,10 @@ def kyc(request):
 @login_required
 def loan(request):
     user_profile = Profile.objects.filter(user=request.user)
+    u_profile = Profile.objects.get(user=request.user)
     context = {
         'user_profile': user_profile,
+        'u_profile': u_profile
     }
     return render(request, 'main/loan.html', context)
 

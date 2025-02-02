@@ -48,7 +48,33 @@
           Connected <br />
           <span class="connected-name">
             {{ request.user.first_name }} {{ request.user.last_name }}
-            <i class="fa-solid fa-arrow-down"></i>
+            <li style="list-style: none" class="dropdown">
+              <button
+                class="dropdown-toggle"
+                style="
+                  border: none;
+                  background-color: rgb(2, 32, 62);
+                  color: white;
+                "
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              ></button>
+              <ul class="dropdown-menu" style="margin: 0; padding: 10px">
+                <li style="background-color: white; padding: 0; margin: 0">
+                  <a
+                    class="dropdown-item"
+                    href="{%url 'logout'%}"
+                    style="
+                      border-radius: 5px;
+                      margin: 0;
+                      color: rgb(20, 67, 177);
+                    "
+                    >Logout</a
+                  >
+                </li>
+              </ul>
+            </li>
           </span>
         </p>
       </div>
@@ -273,7 +299,7 @@
                 ><i class="fa-regular fa-life-ring"></i> Support</a
               >
             </li>
-            <li>
+            <li style="margin-bottom: 75px">
               <a href="{%url 'setting'%}"
                 ><i class="fa-solid fa-gear"></i> Account Settings</a
               >

@@ -91,7 +91,7 @@ def register_view(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    return render(request, 'main/register.html', {'form': form})
 
 
 def logout_view(request):

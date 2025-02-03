@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="register-section" style="display: flex; justify-content: center; align-items: center; margin-top: 50px; padding: 0; width: 100%; height: 100%;">
+    <div class="register-container" style="width: 100%; max-width: 500px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+        <form class="register-form" action="{% url 'register' %}" method="post" style="display: flex; flex-direction: column; gap: 15px;">
+            {% csrf_token %}
+            <p style="font-size: xx-large; text-align: center;">Create Your Account</p>
+            <div style="background-color: white; padding: 10px; box-shadow: rgba(31, 43, 58, 0.1) 0px 4px 15px 0px; border-left: 5px solid #07a80d;">
+                <p>Fill in the details below to create your new Floxix Bank account.</p>
+            </div>
+            
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" id="first_name" placeholder="First Name" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" id="last_name" placeholder="Last Name" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" placeholder="Email Address" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <label for="phone_number">Phone Number</label>
+            <input type="tel" name="phone_number" id="phone_number" placeholder="Phone Number" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <label for="dob">Date of Birth</label>
+            <input type="date" name="dob" id="dob" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <label for="address">Address</label>
+            <textarea name="address" id="address" rows="3" placeholder="Street Address, City, State, ZIP" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+            
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Create Password" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <label for="password_confirm">Confirm Password</label>
+            <input type="password" name="password_confirm" id="password_confirm" placeholder="Confirm Password" required style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+            
+            <button id="blueButton" type="submit" style="padding: 12px; font-size: 18px; background-color: #07a80d; color: white; border: none; border-radius: 4px; cursor: pointer;" class="transfer-button">Register</button>
+        </form>
+        <div class="modal fade" id="Processing" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <p>Processing your transfer...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

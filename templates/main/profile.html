@@ -364,6 +364,18 @@
           console.error("Toggle button not found");
         }
       });
+      document.addEventListener("DOMContentLoaded", function() {
+        let messages = document.querySelectorAll(".chat-message");
+
+        messages.forEach(function(msg) {
+            if (msg.textContent.trim().startsWith("Service:")) {
+                msg.style.backgroundColor = "orange";
+                msg.style.color = "white"; 
+                msg.style.padding = "10px"; 
+                msg.style.borderRadius = "5px"; 
+            }
+        });
+    });
     </script>
   </body>
 </html>

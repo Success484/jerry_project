@@ -145,7 +145,7 @@ def transaction_page(request):
                 form.add_error('transaction_pin', "Incorrect transaction PIN.")
             else:
                 try:
-                    transfer.save()               
+                    # transfer.save()           
                     messages.success(request, "Transfer successful!")
                     return redirect('success_page')    
                 except IntegrityError:
@@ -161,7 +161,11 @@ def transaction_page(request):
 
 @login_required
 def success_page(request):
-    return render(request, 'main/success_page.html')
+    user_profile = Profile.objects.filter(user=request.user)
+    context = {
+        'user_profile': user_profile,
+    }
+    return render(request, 'main/success_page.html', context)
 
 
 @login_required

@@ -31,15 +31,18 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-body text-center">
-        <i class="fa-solid fa-check-circle fa-3x" style="color: green"></i>
-        <h5 class="mt-3" style="color: black">Transfer Successful</h5>
-        <a
-          href="{% url 'profile' %}"
+        <i class="fa-solid fa-lock fa-3x" style="color: green;"></i>
+        <h5 class="mt-3" style="color: black">Enter Your IMF Code</h5>
+        <form onsubmit="return false;">
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <input required type="text" style="width: 30%; padding: 10px;">
+        </div>
+        <button
           style="color: white; text-decoration: none"
           class="btn btn-success mt-3"
-          id="transferBtn"
-          >Ok</a
-        >
+          >Verify
+          </button>
+        </form>
       </div>
     </div>
   </div>
@@ -53,6 +56,6 @@
   setTimeout(function () {
     $("#loadingModal").modal("hide");
     $("#successModal").modal("show");
-  }, 8000); // 8000 milliseconds = 4 seconds
+  }, 1000); // 8000 milliseconds = 4 seconds
 </script>
 {%endblock section%}

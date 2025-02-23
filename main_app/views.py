@@ -269,10 +269,11 @@ def verify_imf(request):
                         imf_record.save()
 
                         # Send confirmation email
+                        formatted_amount = f"{intcomma(amount)}"
                         subject = "Transaction Successful - Floxix Bank"
                         html_message = render_to_string('main/transaction_email.html', {
                             'user': request.user,
-                            'amount': amount,
+                            'amount': formatted_amount,
                             'account_number': account_number,
                             'bank_name': bank_name,
                             'description': description,

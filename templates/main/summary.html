@@ -1,5 +1,6 @@
 {%extends 'main/profile.html'%}
 {%load static%}
+{% load humanize %}
 {%block section%}
 <div class="first_transfer_form_section">
   <form action="" style="width: 100%; margin-top: 30px; display: none;">
@@ -92,7 +93,7 @@
                   <td>{{ tranfer.account_number }}</td>
                   <td>{{ tranfer.transaction_type }}</td>
                   <td>{{ tranfer.transaction_scope }}</td>
-                  <td>${{ tranfer.amount }}</td>
+                  <td>${{ tranfer.amount|floatformat:0|intcomma }}</td>
                   <td>{{ tranfer.transfer_date }}</td>
                   <td>{{ tranfer.description }}</td>
                   <td style="font-size: 18px;" class="{% if tranfer.transaction_info == 'Completed' %}text-green{% else %}text-red{% endif %}">

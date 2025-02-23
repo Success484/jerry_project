@@ -1,5 +1,7 @@
 {%extends 'main/profile.html'%}
 {%load static%}
+{% load humanize %}
+
 {%block section%}
 <div id="chat-icon" class="chat-icon">
   Chat 💬
@@ -74,7 +76,7 @@
                <div class="user-details">
                    <p>Available Balance</p>
                    {% for profile in user_profile %}
-                   <p>USD {{profile.amount}}</p>
+                   <p>USD {{ profile.amount|floatformat:0|intcomma }}</p>
                    {%endfor%}
                    <p>{{request.user.first_name}} {{request.user.last_name}}</p>
                    <p>Your IP Address</p>
@@ -92,7 +94,7 @@
            </div>
            <div class="checking-amount-detail">
                <p style="font-size: 13px; margin-top: 5px;"><i class="fa-solid fa-coins"></i> *****53260</p>
-               <p style="font-size: 13px;">{% for profile in user_profile %}{{profile.amount}}{%endfor%} USD</p>
+               <p style="font-size: 13px;">{% for profile in user_profile %}{{ profile.amount|floatformat:0|intcomma }}{%endfor%} USD</p>
             </div>
             <div class="checking-details">
                <h3 style="padding: 20px 0 10px 20px; margin: 0; font-size: 14px;">Loans and lines of credit</h3>
@@ -127,7 +129,7 @@
               </div>
               <div>
                 <p>Amount</p>
-                <p>- {{ tranfer.amount }} USD</p>
+                <p>- {{ tranfer.amount|floatformat:0|intcomma }} USD</p>
                 <p class="{% if tranfer.transaction_info == 'Completed' %}text-green{% else %}text-red{% endif %}">
                   {{ tranfer.transaction_info }}
                 </p>

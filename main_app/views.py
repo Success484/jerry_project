@@ -14,6 +14,9 @@ from .models import UserProfile, IMFVerification
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.contrib.humanize.templatetags.humanize import intcomma
+
+
 
 
 # Create your views here.
@@ -101,7 +104,9 @@ def logout_view(request):
 @login_required
 def user_profile(request):
     user_profile = Profile.objects.filter(user=request.user)
+    formatted_amount = intcomma(int(user_profile.amount))
     context = {
+        "formatted_amount": formatted_amount,
         'user_profile': user_profile,
     }
     return render(request, 'main/profile.html', context)
@@ -110,6 +115,8 @@ def user_profile(request):
 def user_details(request):
     tranfers = Transfer.objects.filter(user=request.user).order_by('-transfer_date')[:4]
     user_profile = Profile.objects.filter(user=request.user)
+    profile = Profile.objects.get(user=request.user)
+    formatted_amount = intcomma(int(profile.amount))
     all_messages = Chatbox.objects.filter(user=request.user)
     unread_count = Chatbox.objects.filter(user=request.user, seen=False).count()
     if request.method == 'POST':
@@ -127,27 +134,26 @@ def user_details(request):
         'unread_count': unread_count,
         'tranfers': tranfers,
         'unread_count_seen': unread_count_seen,
+        "formatted_amount": formatted_amount,
     }
     return render(request, 'main/profile_dashboard.html', context)
 
 
 @login_required
 def transaction_page(request):
-    """Handles the transaction process including IMF verification"""
+    """Handles the transaction process, deferring transaction save until IMF verification"""
     u_profile = Profile.objects.get(user=request.user)
-
+    user_profile = Profile.objects.filter(user=request.user)
+    formatted_amount = intcomma(int(u_profile.amount))
     if request.method == 'POST':
         form = TransferForm(request.POST)
         if form.is_valid():
-            transfer = form.save(commit=False)
-            transfer.user = request.user
+            transaction_data = form.cleaned_data  # Store form data temporarily
 
             # Check transaction PIN
-            if transfer.transaction_pin != u_profile.profile_pin:
+            if transaction_data['transaction_pin'] != u_profile.profile_pin:
                 form.add_error('transaction_pin', "Incorrect transaction PIN.")
             else:
-                transfer.save()
-
                 # Generate a 6-digit IMF code
                 imf_code = get_random_string(length=6, allowed_chars="0123456789")
 
@@ -157,7 +163,6 @@ def transaction_page(request):
                     defaults={'imf_code': imf_code, 'is_verified': False}
                 )
                 
-                # If the record exists, update it with the new IMF code
                 if not created:
                     imf_record.imf_code = imf_code
                     imf_record.is_verified = False
@@ -182,57 +187,121 @@ def transaction_page(request):
                     messages.error(request, "Failed to send IMF code. Try again.")
                     return redirect('transaction_page')
 
-                # Store transfer ID in session
-                request.session['pending_transfer'] = transfer.id  
+                # Store transaction data in session instead of saving immediately
+                request.session['pending_transfer_data'] = transaction_data  
+                request.session.modified = True
 
                 return redirect('verify_imf')
 
     else:
         form = TransferForm()
 
-    context = {'form': form, 'u_profile': u_profile}
+    context = {
+        'form': form, 
+        'u_profile': u_profile,
+        'user_profile': user_profile,
+        "formatted_amount": formatted_amount,
+        }
     return render(request, 'main/transaction_page.html', context)
+
 
 
 @login_required
 def verify_imf(request):
-    """Handles IMF verification"""
+    """Handles IMF verification and completes the transaction"""
     try:
-        imf_record = IMFVerification.objects.get(user=request.user)
-    except IMFVerification.DoesNotExist:
-        messages.error(request, "IMF verification record not found.")
+        user_profile = Profile.objects.filter(user=request.user)
+        profile = Profile.objects.get(user=request.user)
+        imf_record = IMFVerification.objects.filter(user=request.user).first()
+
+        if not imf_record:
+            messages.error(request, "IMF verification record not found.")
+            return redirect("transaction_page")
+
+    except Profile.DoesNotExist:
+        messages.error(request, "User profile not found.")
         return redirect("transaction_page")
 
     if request.method == "POST":
         entered_imf = request.POST.get("imf_code")
 
-        if imf_record.imf_code == entered_imf:
-            # Retrieve the pending transaction from session
-            transaction_id = request.session.get('pending_transfer')
+        print(f"Stored IMF Code: {imf_record.imf_code}, Entered IMF Code: {entered_imf}")  # Debugging
 
-            if transaction_id:
-                transaction = get_object_or_404(Transfer, id=transaction_id, user=request.user)
+        if str(imf_record.imf_code).strip() == str(entered_imf).strip():
+            # Retrieve transaction data from session
+            transaction_data = request.session.get('pending_transfer_data')
 
-                # Mark transaction as completed
-                transaction.transaction_info = 'COMPLETED'  
-                transaction.save()
+            if transaction_data:
+                try:
+                    account_number = transaction_data.get("account_number")
+                    amount = int(transaction_data.get("amount", 0))  # Ensure integer conversion
+                    transaction_pin = transaction_data.get("transaction_pin")
+                    bank_name = transaction_data.get("bank_name")
+                    description = transaction_data.get("description")
 
-                # Remove pending transaction from session
-                request.session.pop('pending_transfer', None)
+                    if not all([account_number, amount, transaction_pin, bank_name]):
+                        messages.error(request, "Invalid transaction data.")
+                        return redirect("transaction_page")
 
-                # Clear IMF code (use empty string instead of None)
-                imf_record.imf_code = ""
-                imf_record.is_verified = True
-                imf_record.save()
+                    # 🔥 FIXED: Convert profile.amount properly
+                    profile_balance = int(float(str(profile.amount).replace(",", "").strip()))
 
-                messages.success(request, "Transaction successful!")
-                return redirect("success_page")
+                    if amount > 0 and profile_balance >= amount:
+                        profile.amount = str(profile_balance - amount)  # Deduct amount and save as string
+                        profile.save()
+
+                        # Create and save the Transfer object
+                        Transfer.objects.create(
+                            user=request.user,
+                            account_number=account_number,
+                            amount=amount,
+                            transaction_pin=transaction_pin,
+                            bank_name=bank_name,
+                            description=description,
+                        )
+
+                        # Remove transaction data from session safely
+                        request.session.pop("pending_transfer_data", None)
+
+                        # Clear IMF code after successful verification
+                        imf_record.imf_code = ""  # Consider generating a new code instead
+                        imf_record.is_verified = True
+                        imf_record.save()
+
+                        # Send confirmation email
+                        subject = "Transaction Successful - Floxix Bank"
+                        html_message = render_to_string('main/transaction_email.html', {
+                            'user': request.user,
+                            'amount': amount,
+                            'account_number': account_number,
+                            'bank_name': bank_name,
+                            'description': description,
+                        })
+                        plain_message = strip_tags(html_message)  # Convert HTML to plain text
+
+                        email = EmailMultiAlternatives(
+                            subject,
+                            plain_message,
+                            settings.DEFAULT_FROM_EMAIL,
+                            [request.user.email]
+                        )
+                        email.attach_alternative(html_message, "text/html")
+                        email.send()
+
+                        messages.success(request, "Transaction successful!")
+                        return redirect("success_page")
+
+                    else:
+                        messages.error(request, "Insufficient funds.")
+                except ValueError:
+                    messages.error(request, "Invalid amount format.")
             else:
                 messages.error(request, "No pending transaction found.")
         else:
             messages.error(request, "Invalid IMF code. Please try again.")
 
-    return render(request, "main/verify_imf.html")
+    return render(request, "main/verify_imf.html", {'user_profile': user_profile})
+
 
 
 @login_required
@@ -251,9 +320,12 @@ def summary(request):
     page_number = request.GET.get('page')
     tranfers = paginator.get_page(page_number)
     user_profile = Profile.objects.filter(user=request.user)
+    profile = Profile.objects.get(user=request.user)
+    formatted_amount = intcomma(int(profile.amount))
     context = {
         'user_profile': user_profile,
         'tranfers': tranfers,
+        "formatted_amount": formatted_amount,
     }
     return render(request, 'main/summary.html', context)
 

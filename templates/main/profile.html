@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -88,11 +89,11 @@
           <div class="balance-info">
             <p class="available-balance">AVAILABLE BALANCE</p>
             <p class="available-amount">
-              {% for profile in user_profile %}{{ profile.amount }}{% endfor %}
+              {% for profile in user_profile %}{{ profile.amount|floatformat:0|intcomma }}{% endfor %}
               <span class="currency-amount">USD</span>
             </p>
             <p class="second-available-amount">
-              {% for profile in user_profile %}{{ profile.amount }}{% endfor %}
+              {% for profile in user_profile %}{{ profile.amount|floatformat:0|intcomma }}{% endfor %}
               USD
             </p>
           </div>

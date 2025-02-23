@@ -1,4 +1,7 @@
-{%extends 'main/profile.html'%} {%load static%} {%block section%}
+{%extends 'main/profile.html'%} 
+{%load static%} 
+{% load humanize %}
+{%block section%}
 <div class="first_transfer_form_section">
   <form action="" style="width: 100%; margin-top: 30px; display: none">
     <label> Customer Service Department </label>
@@ -107,7 +110,7 @@
           <p style="margin: 0">
             Checking Account (USD) <br />
             <span style="font-size: 12px"
-              >Available Balance: USD {{u_profile.amount }}</span
+              >Available Balance: USD {{u_profile.amount|floatformat:0|intcomma }}</span
             >
           </p>
         </div>

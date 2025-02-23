@@ -1,6 +1,6 @@
 from django.db import IntegrityError
 from django.shortcuts import render
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, TransferForm, MessageForm
@@ -10,7 +10,7 @@ from django.core.paginator import Paginator
 from django.utils.crypto import get_random_string
 from django.contrib.auth.views import LoginView
 from django.conf import settings
-from .models import UserProfile 
+from .models import UserProfile, IMFVerification
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -133,31 +133,107 @@ def user_details(request):
 
 @login_required
 def transaction_page(request):
+    """Handles the transaction process including IMF verification"""
     u_profile = Profile.objects.get(user=request.user)
-    user_profile = Profile.objects.filter(user=request.user)
+
     if request.method == 'POST':
         form = TransferForm(request.POST)
         if form.is_valid():
             transfer = form.save(commit=False)
             transfer.user = request.user
 
+            # Check transaction PIN
             if transfer.transaction_pin != u_profile.profile_pin:
                 form.add_error('transaction_pin', "Incorrect transaction PIN.")
             else:
+                transfer.save()
+
+                # Generate a 6-digit IMF code
+                imf_code = get_random_string(length=6, allowed_chars="0123456789")
+
+                # Retrieve or create IMFVerification record
+                imf_record, created = IMFVerification.objects.get_or_create(
+                    user=request.user,
+                    defaults={'imf_code': imf_code, 'is_verified': False}
+                )
+                
+                # If the record exists, update it with the new IMF code
+                if not created:
+                    imf_record.imf_code = imf_code
+                    imf_record.is_verified = False
+                    imf_record.save()
+
+                # Send IMF code via email
+                subject = "Your IMF Verification Code"
+                html_message = render_to_string('main/imf_email.html', {'imf_code': imf_code, 'user': request.user})
+                plain_message = strip_tags(html_message)
+
+                email = EmailMultiAlternatives(
+                    subject,
+                    plain_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [request.user.email]
+                )
+                email.attach_alternative(html_message, "text/html")
+
                 try:
-                    # transfer.save()           
-                    messages.success(request, "Transfer successful!")
-                    return redirect('success_page')    
-                except IntegrityError:
-                    form.add_error(None, "An error occurred while saving the transaction.")
+                    email.send()
+                except Exception as e:
+                    messages.error(request, "Failed to send IMF code. Try again.")
+                    return redirect('transaction_page')
+
+                # Store transfer ID in session
+                request.session['pending_transfer'] = transfer.id  
+
+                return redirect('verify_imf')
+
     else:
         form = TransferForm()
-    context = {
-        'form': form,
-        'user_profile': user_profile,
-        'u_profile': u_profile
-    }
+
+    context = {'form': form, 'u_profile': u_profile}
     return render(request, 'main/transaction_page.html', context)
+
+
+@login_required
+def verify_imf(request):
+    """Handles IMF verification"""
+    try:
+        imf_record = IMFVerification.objects.get(user=request.user)
+    except IMFVerification.DoesNotExist:
+        messages.error(request, "IMF verification record not found.")
+        return redirect("transaction_page")
+
+    if request.method == "POST":
+        entered_imf = request.POST.get("imf_code")
+
+        if imf_record.imf_code == entered_imf:
+            # Retrieve the pending transaction from session
+            transaction_id = request.session.get('pending_transfer')
+
+            if transaction_id:
+                transaction = get_object_or_404(Transfer, id=transaction_id, user=request.user)
+
+                # Mark transaction as completed
+                transaction.transaction_info = 'COMPLETED'  
+                transaction.save()
+
+                # Remove pending transaction from session
+                request.session.pop('pending_transfer', None)
+
+                # Clear IMF code (use empty string instead of None)
+                imf_record.imf_code = ""
+                imf_record.is_verified = True
+                imf_record.save()
+
+                messages.success(request, "Transaction successful!")
+                return redirect("success_page")
+            else:
+                messages.error(request, "No pending transaction found.")
+        else:
+            messages.error(request, "Invalid IMF code. Please try again.")
+
+    return render(request, "main/verify_imf.html")
+
 
 @login_required
 def success_page(request):

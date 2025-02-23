@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=-dy7$a_+c^*k=hpil62i_g0wxoiu+1qo+2hr^e-h(n%e$n3c2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['floxix.onrender.com', 'localhost']
 
@@ -75,16 +75,24 @@ WSGI_APPLICATION = 'jdi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'lpffTcHXWZRrhbxiKzoGcVMLBLYpYJIE',
+#         'HOST': 'junction.proxy.rlwy.net',
+#         'PORT': '18506',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'lpffTcHXWZRrhbxiKzoGcVMLBLYpYJIE',
-        'HOST': 'junction.proxy.rlwy.net',
-        'PORT': '18506',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
+
 
 
 # Password validation

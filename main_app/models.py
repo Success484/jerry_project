@@ -86,6 +86,15 @@ class Chatbox(models.Model):
         return f"{self.user.first_name} {self.user.last_name}"
     
 
+class IMFVerification(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='imf_verification')
+    imf_code = models.CharField(max_length=10, unique=True, null=True, blank=True)  # Allow null
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"IMF Code for {self.user.email}"
+    
+    
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pin_code = models.CharField(max_length=6, blank=True, null=True)

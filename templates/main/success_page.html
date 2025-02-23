@@ -1,61 +1,58 @@
-{%extends 'main/profile.html'%} {%load static%} {%block section%}
-<!-- Processing transfer modal -->
-<div
-  class="modal fade"
-  id="loadingModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="loadingModalTitle"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <div class="spinner-border text-primary" role="status">
-          <span class="sr-only">Loading...</span>
+{% extends 'main/profile.html' %} 
+{% load static %} 
+{% block section %}
+
+<!-- Processing Transfer Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p>Processing your transfer...</p>
+            </div>
         </div>
-        <p>Processing your transfer...</p>
-      </div>
     </div>
-  </div>
 </div>
 
 <!-- Successful Transfer Modal -->
-<div
-  class="modal fade"
-  id="successModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="successModalTitle"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <i class="fa-solid fa-lock fa-3x" style="color: green;"></i>
-        <h5 class="mt-3" style="color: black">Enter Your IMF Code</h5>
-        <form onsubmit="return false;">
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <input required type="text" style="width: 30%; padding: 10px;">
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalTitle">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <!-- Success Icon -->
+                <i class="fa-solid fa-check-circle fa-3x" style="color: green;"></i>
+
+                <!-- Success Message -->
+                <h4 class="mt-3" style="color: black;">IMF Verification Successful!</h4>
+                <p class="text-muted">Your transaction has been verified successfully.</p>
+
+                <!-- Redirect Button -->
+                <a href="{%url 'profile'%}" class="btn btn-primary mt-3" style="padding: 10px 20px; border-radius: 5px; font-weight: bold; text-decoration: none; color: white; display: inline-block;">
+                    Continue
+                </a>            
+            </div>
         </div>
-        <button
-          style="color: white; text-decoration: none"
-          class="btn btn-success mt-3"
-          >Verify
-          </button>
-        </form>
-      </div>
     </div>
-  </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 <script>
-  $("#loadingModal").modal("show");
+    // Show the loading modal on page load
+    $("#loadingModal").modal("show");
 
-  // After 4 seconds, hide the loading modal and show the success modal
-  setTimeout(function () {
-    $("#loadingModal").modal("hide");
-    $("#successModal").modal("show");
-  }, 8000); // 8000 milliseconds = 4 seconds
+    // After 4 seconds, hide the loading modal and show the success modal
+    setTimeout(function () {
+        $("#loadingModal").modal("hide");
+        $("#successModal").modal("show");
+    }, 4000); // 4000ms = 4 seconds
+
+    // Function to redirect after success
+    function redirectToDashboard() {
+        window.location.href = "/dashboard";  // Change to your actual success page
+    }
 </script>
-{%endblock section%}
+
+{% endblock section %}

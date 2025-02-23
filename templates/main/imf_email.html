@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>IMF Code Verification</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+
+    <table style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <tr>
+            <td style="text-align: center;">
+                <h2 style="color: #4CAF50;">🔐 IMF Code Verification</h2>
+                <p style="font-size: 16px;">Hello {{ user.first_name }},</p>
+                <p style="font-size: 16px;">Your IMF verification code is:</p>
+                <h1 style="background: #4CAF50; color: white; padding: 10px; border-radius: 5px; display: inline-block;">{{ imf_code }}</h1>
+                <p style="font-size: 14px; color: #555;">This code will expire in 10 minutes. Do not share it with anyone.</p>
+                <p style="margin-top: 20px;">Thanks, <br><strong>Floxix Security Team</strong></p>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

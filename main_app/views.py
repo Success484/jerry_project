@@ -17,8 +17,6 @@ from django.utils.html import strip_tags
 from django.contrib.humanize.templatetags.humanize import intcomma
 
 
-
-
 # Create your views here.
 def homePage(request):
     return render(request, 'main/index.html')

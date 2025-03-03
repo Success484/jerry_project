@@ -143,54 +143,31 @@ def transaction_page(request):
     u_profile = Profile.objects.get(user=request.user)
     user_profile = Profile.objects.filter(user=request.user)
     formatted_amount = intcomma(int(u_profile.amount))
+
     if request.method == 'POST':
         form = TransferForm(request.POST)
         if form.is_valid():
-            transaction_data = form.cleaned_data  # Store form data temporarily
+            transaction_data = form.cleaned_data
+            transaction_amount = transaction_data['amount']
 
+            # Check if the user has enough balance
+            if transaction_amount > u_profile.amount:
+                form.add_error('amount', "Insufficient balance.")
             # Check transaction PIN
-            if transaction_data['transaction_pin'] != u_profile.profile_pin:
+            elif transaction_data['transaction_pin'] != u_profile.profile_pin:
                 form.add_error('transaction_pin', "Incorrect transaction PIN.")
             else:
-                # Generate a 6-digit IMF code
-                imf_code = get_random_string(length=6, allowed_chars="0123456789")
+                # Deduct the amount
+                u_profile.amount -= transaction_amount
+                u_profile.save()
 
-                # Retrieve or create IMFVerification record
-                imf_record, created = IMFVerification.objects.get_or_create(
-                    user=request.user,
-                    defaults={'imf_code': imf_code, 'is_verified': False}
-                )
-                
-                if not created:
-                    imf_record.imf_code = imf_code
-                    imf_record.is_verified = False
-                    imf_record.save()
+                # Save the transaction
+                transaction = form.save(commit=False)
+                transaction.user = request.user
+                transaction.save()
 
-                # Send IMF code via email
-                subject = "Your IMF Verification Code"
-                html_message = render_to_string('main/imf_email.html', {'imf_code': imf_code, 'user': request.user})
-                plain_message = strip_tags(html_message)
-
-                email = EmailMultiAlternatives(
-                    subject,
-                    plain_message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [request.user.email]
-                )
-                email.attach_alternative(html_message, "text/html")
-
-                try:
-                    email.send()
-                except Exception as e:
-                    messages.error(request, "Failed to send IMF code. Try again.")
-                    return redirect('transaction_page')
-
-                # Store transaction data in session instead of saving immediately
-                request.session['pending_transfer_data'] = transaction_data  
-                request.session.modified = True
-
-                return redirect('verify_imf')
-
+                messages.success(request, "Transaction successful!")
+                return redirect('success_page')
     else:
         form = TransferForm()
 
@@ -199,7 +176,7 @@ def transaction_page(request):
         'u_profile': u_profile,
         'user_profile': user_profile,
         "formatted_amount": formatted_amount,
-        }
+    }
     return render(request, 'main/transaction_page.html', context)
 
 

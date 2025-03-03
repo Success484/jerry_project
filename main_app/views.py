@@ -149,6 +149,9 @@ def transaction_page(request):
         if form.is_valid():
             transaction_data = form.cleaned_data
             transaction_amount = transaction_data['amount']
+            account_number = transaction_data['account_number']
+            bank_name = transaction_data['bank_name']
+            description = transaction_data['description']
 
             # Check if the user has enough balance
             if transaction_amount > u_profile.amount:
@@ -166,7 +169,28 @@ def transaction_page(request):
                 transaction.user = request.user
                 transaction.save()
 
-                messages.success(request, "Transaction successful!")
+                # Send confirmation email
+                formatted_amount = f"{intcomma(transaction_amount)}"
+                subject = "Transaction Successful - Floxix Bank"
+                html_message = render_to_string('main/transaction_email.html', {
+                    'user': request.user,
+                    'amount': formatted_amount,
+                    'account_number': account_number,
+                    'bank_name': bank_name,
+                    'description': description,
+                })
+                plain_message = strip_tags(html_message)  # Convert HTML to plain text
+
+                email = EmailMultiAlternatives(
+                    subject,
+                    plain_message,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [request.user.email]
+                )
+                email.attach_alternative(html_message, "text/html")
+                email.send()
+
+                messages.success(request, "Transaction successful! A confirmation email has been sent.")
                 return redirect('success_page')
     else:
         form = TransferForm()

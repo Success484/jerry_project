@@ -129,7 +129,11 @@
               </div>
               <div>
                 <p>Amount</p>
-                <p>- {{ tranfer.amount|floatformat:0|intcomma }} USD</p>
+                {% if tranfer.transaction_type == "Debit" %}
+                    <p>- {{ tranfer.amount|floatformat:0|intcomma }} USD</p>
+                {% else %}
+                    <p>+ {{ tranfer.amount|floatformat:0|intcomma }} USD</p>
+                {% endif %}
                 <p class="{% if tranfer.transaction_info == 'Completed' %}text-green{% else %}text-red{% endif %}">
                   {{ tranfer.transaction_info }}
                 </p>

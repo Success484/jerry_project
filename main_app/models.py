@@ -79,7 +79,7 @@ class Transfer(models.Model):
 
 class Chatbox(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    message = models.CharField(max_length=1000)
+    message = models.CharField(max_length=999)
     seen = models.BooleanField(default=False)
 
     def __str__(self):

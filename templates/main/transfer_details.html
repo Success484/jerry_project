@@ -1,0 +1,58 @@
+{%extends 'main/profile.html'%}
+{%load static%}
+{% load humanize %}
+{%block section%}
+<div style="height: 80vh;">
+    <div style="margin-top: 50px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <table style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <tr>
+                <td style="text-align: center;">
+                    <h2 style="color: #4CAF50; margin-top: 20px;">💰 Transaction Successful</h2>
+                    <p style="font-size: 16px;">Hello {{ transfer_details.first_name }},</p>
+                    <p style="font-size: 16px; color: #4CAF50;">Your transaction was completed successfully.</p>
+    
+                    <h3 style="color: #4CAF50;">Transaction Details:</h3>
+                    <table style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 10px; color: #4CAF50; margin: 20px;">
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Holder Name:</td>
+                            <td style="padding: 8px;">{{ transfer_details.holder_name }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Amount:</td>
+                            <td style="padding: 8px;">${{ transfer_details.amount|floatformat:0|intcomma }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Account Number:</td>
+                            <td style="padding: 8px;">{{ transfer_details.account_number }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Bank Name:</td>
+                            <td style="padding: 8px;">{{ transfer_details.bank_name }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Description:</td>
+                            <td style="padding: 8px;">{{ transfer_details.description }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; font-weight: bold;">Date:</td>
+                            <td style="padding: 8px;">{{ transfer_details.date_created }}</td>
+                        </tr>
+                    </table>
+    
+                    <p style="font-size: 14px; color: #555; margin-top: 20px; padding: 20px;">If you did not authorize this transaction, please contact us immediately.</p>
+                    <p style="margin-top: 20px;">Thanks, <br><strong>Floxix Support Team</strong></p>
+
+                    <a
+                    href="{% url 'profile' %}"
+                    style="margin-bottom: 50px; width: 50%; position: relative; bottom: 60px;"
+                    class="btn btn-primary transfer-button"
+                    >
+                    Continue
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{%endblock section%}

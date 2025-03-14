@@ -10,6 +10,7 @@ urlpatterns=[
     path('account/user/profile/', views.user_profile, name='user_profile'),
     path('account/user/profile/details/', views.user_details, name='profile'),
     path('account/user/profile/details/transaction/', views.transaction_page, name='transaction_page'),
+    path('account/user/profile/details/transactions_details/<int:transfer_id>/', views.transactions_details, name='transactions_details'),
     path('account/user/profile/details/transaction/other/banks/', views.other_bank, name='other_bank'),
     path('account/user/profile/details/transaction/cross_border/transfer/', views.cross_border_transfer, name='cross_border_transfer'),
     path('account/user/profile/details/transaction/cross_border/transfer/imf-verify/', views.verify_imf, name='verify_imf'),

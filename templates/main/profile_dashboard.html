@@ -140,7 +140,7 @@
               </div>
               <div>
                 <p>{{ tranfer.transaction_type }}</p>
-                <p>View Details</p>
+                <a href="{% url 'transactions_details' tranfer.id %}" style="cursor: pointer;">View Details</a>
               </div>
             </div>
           {% endfor %}

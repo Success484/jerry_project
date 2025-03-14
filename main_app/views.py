@@ -137,6 +137,19 @@ def user_details(request):
     return render(request, 'main/profile_dashboard.html', context)
 
 
+def transactions_details(request, transfer_id):
+    transfer_details = get_object_or_404(Transfer, id=transfer_id, user=request.user)
+    user_profile = Profile.objects.filter(user=request.user)
+    tranfers = Transfer.objects.filter(user=request.user)
+    formatted_amount = intcomma(int(transfer_details.amount))
+    context = {
+        'transfer_details': transfer_details,
+        'user_profile': user_profile,
+        'tranfers': tranfers,
+        'formatted_amount': formatted_amount
+    }
+    return render(request, 'main/transfer_details.html', context)
+
 # @login_required
 # def transaction_page(request):
 #     """Handles the transaction process, deferring transaction save until IMF verification"""

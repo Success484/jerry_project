@@ -32,11 +32,15 @@ class ProfileUpdateForm(forms.ModelForm):
 class TransferForm(forms.ModelForm):
     class Meta:
         model = Transfer
-        fields = ['account_number', 'amount', 'bank_name', 'description', 'transaction_pin']
+        fields = ['account_number', 'amount', 'holder_name', 'bank_name', 'description', 'transaction_pin']
         widgets = {
             'account_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter Account Number',
+            }),
+            'holder_name': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Holder Name',
             }),
             'amount': forms.NumberInput(attrs={
                 'class': 'form-control',
@@ -58,6 +62,7 @@ class TransferForm(forms.ModelForm):
         }
         labels = {
             'account_number': 'Account Number',
+            'holder_name': 'Holder Name',
             'amount': 'Amount',
             'bank_name': 'Bank Name',
             'description': 'Description',

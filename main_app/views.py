@@ -217,8 +217,9 @@ def transaction_page(request):
         form = TransferForm(request.POST)
         if form.is_valid():
             transaction_data = form.cleaned_data
-            transaction_amount = transaction_data['amount']
             account_number = transaction_data['account_number']
+            transaction_amount = transaction_data['amount']
+            holder_name = transaction_data['holder_name']
             bank_name = transaction_data['bank_name']
             description = transaction_data['description']
 
@@ -245,6 +246,7 @@ def transaction_page(request):
                     'user': request.user,
                     'amount': formatted_amount,
                     'account_number': account_number,
+                    'holder_name': holder_name,
                     'bank_name': bank_name,
                     'description': description,
                 })
@@ -293,9 +295,7 @@ def verify_imf(request):
 
     if request.method == "POST":
         entered_imf = request.POST.get("imf_code")
-
-        print(f"Stored IMF Code: {imf_record.imf_code}, Entered IMF Code: {entered_imf}")  # Debugging
-
+        # print(f"Stored IMF Code: {imf_record.imf_code}, Entered IMF Code: {entered_imf}")  # Debugging
         if str(imf_record.imf_code).strip() == str(entered_imf).strip():
             # Retrieve transaction data from session
             transaction_data = request.session.get('pending_transfer_data')

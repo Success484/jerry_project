@@ -221,7 +221,7 @@ def transactions_details(request, transfer_id):
 
 @login_required
 def transaction_page(request):
-    """Handles the transaction process, deferring transaction save until IMF verification"""
+    """Handles the transaction process, deferring transaction save without IMF verification"""
     u_profile = Profile.objects.get(user=request.user)
     user_profile = Profile.objects.filter(user=request.user)
     formatted_amount = intcomma(int(u_profile.amount))

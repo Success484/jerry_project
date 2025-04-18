@@ -46,7 +46,7 @@ class Transfer(models.Model):
         (CHECK, 'Check Deposite'),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    account_number = models.CharField(max_length=15)
+    account_number = models.CharField(max_length=20)
     holder_name = models.CharField(max_length=250)
     amount = models.IntegerField(blank=False, null=False)
     bank_name = models.CharField(max_length=100, blank=False, null=False)

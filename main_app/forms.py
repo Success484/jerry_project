@@ -81,10 +81,14 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Chatbox
         fields = [
-            'message'
+            'message', 'message_image'
         ]
         widgets = {
             'message': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Type a message...',
-            })}
+            }),
+            'message_image': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            })
+        }

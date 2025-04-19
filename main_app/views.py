@@ -118,7 +118,7 @@ def user_details(request):
     all_messages = Chatbox.objects.filter(user=request.user)
     unread_count = Chatbox.objects.filter(user=request.user, seen=False).count()
     if request.method == 'POST':
-        form = MessageForm(request.POST)
+        form = MessageForm(request.POST, request.FILES)
         if form.is_valid():
             message = form.save(commit=False)
             message.user = request.user
@@ -149,74 +149,6 @@ def transactions_details(request, transfer_id):
         'formatted_amount': formatted_amount
     }
     return render(request, 'main/transfer_details.html', context)
-
-# @login_required
-# def transaction_page(request):
-#     """Handles the transaction process, deferring transaction save until IMF verification"""
-#     u_profile = Profile.objects.get(user=request.user)
-#     user_profile = Profile.objects.filter(user=request.user)
-#     formatted_amount = intcomma(int(u_profile.amount))
-
-#     if request.method == 'POST':
-#         form = TransferForm(request.POST)
-#         if form.is_valid():
-#             transaction_data = form.cleaned_data
-#             transaction_amount = transaction_data['amount']
-#             account_number = transaction_data['account_number']
-#             bank_name = transaction_data['bank_name']
-#             description = transaction_data['description']
-
-#             # Check if the user has enough balance
-#             if transaction_amount > u_profile.amount:
-#                 form.add_error('amount', "Insufficient balance.")
-#             # Check transaction PIN
-#             elif transaction_data['transaction_pin'] != u_profile.profile_pin:
-#                 form.add_error('transaction_pin', "Incorrect transaction PIN.")
-#             else:
-#                 # Deduct the amount
-#                 u_profile.amount -= transaction_amount
-#                 u_profile.save()
-
-#                 # Save the transaction
-#                 transaction = form.save(commit=False)
-#                 transaction.user = request.user
-#                 transaction.save()
-
-#                 # Send confirmation email
-#                 formatted_amount = f"{intcomma(transaction_amount)}"
-#                 subject = "Transaction Successful - Floxix Bank"
-#                 html_message = render_to_string('main/transaction_email.html', {
-#                     'user': request.user,
-#                     'amount': formatted_amount,
-#                     'account_number': account_number,
-#                     'bank_name': bank_name,
-#                     'description': description,
-#                 })
-#                 plain_message = strip_tags(html_message)  # Convert HTML to plain text
-
-#                 email = EmailMultiAlternatives(
-#                     subject,
-#                     plain_message,
-#                     settings.DEFAULT_FROM_EMAIL,
-#                     [request.user.email]
-#                 )
-#                 email.attach_alternative(html_message, "text/html")
-#                 email.send()
-
-#                 messages.success(request, "Transaction successful! A confirmation email has been sent.")
-#                 return redirect('success_page')
-#     else:
-#         form = TransferForm()
-
-#     context = {
-#         'form': form, 
-#         'u_profile': u_profile,
-#         'user_profile': user_profile,
-#         "formatted_amount": formatted_amount,
-#     }
-#     return render(request, 'main/transaction_page.html', context)
-
-
 
 
 @login_required
@@ -326,9 +258,6 @@ def transaction_page(request):
     return render(request, 'main/transaction_page.html', context)
 
 
-
-
-
 @login_required
 def verify_imf(request):
     """Handles IMF verification and completes the transaction"""
@@ -426,7 +355,6 @@ def verify_imf(request):
             messages.error(request, "Invalid IMF code. Please try again.")
 
     return render(request, "main/verify_imf.html", {'user_profile': user_profile})
-
 
 
 @login_required

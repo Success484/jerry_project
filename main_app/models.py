@@ -80,7 +80,8 @@ class Transfer(models.Model):
 
 class Chatbox(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    message = models.CharField(max_length=999)
+    message = models.CharField(max_length=999, blank=True)
+    message_image = models.ImageField(upload_to='chat_images', blank=True)
     seen = models.BooleanField(default=False)
 
     def __str__(self):
@@ -89,7 +90,7 @@ class Chatbox(models.Model):
 
 class IMFVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='imf_verification')
-    imf_code = models.CharField(max_length=10, unique=True, null=True, blank=True)  # Allow null
+    imf_code = models.CharField(max_length=10, unique=True, null=True, blank=True)
     is_verified = models.BooleanField(default=False)
 
     def __str__(self):

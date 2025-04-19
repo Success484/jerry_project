@@ -30,13 +30,13 @@ const closeChat = document.getElementById("close-chat");
 
 // Show chat section when the chat icon is clicked
 chatIcon.addEventListener("click", () => {
-  chatSection.style.display = "flex";
+  if (chatSection.style.display === "flex") {
+    chatSection.style.display = "none";
+  } else {
+    chatSection.style.display = "flex";
+  }
 });
 
-// Hide chat section when the close button is clicked
-closeChat.addEventListener("click", () => {
-  chatSection.style.display = "none";
-});
 
 document.addEventListener("DOMContentLoaded", () => {
   const toggleButton = document.getElementById("toggle-sidebar");

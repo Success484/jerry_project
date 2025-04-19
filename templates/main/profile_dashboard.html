@@ -12,31 +12,37 @@
 </div>
 
 <!-- Chat Section -->
-<form method="POST" action="{% url 'profile' %}">
+<form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
   {% csrf_token %}
   <div id="chat-section" class="chat-section" style="height: 1050px; width: 350px;">
     <!-- Chat Header -->
     <div class="chat-header">
       <span>Chat with Us</span>
-      <button id="close-chat" class="close-btn">&times;</button>
     </div>
 
     <!-- Chat Body -->
     <div class="chat-body">
       {% for message in all_messages %}
-      <div class="chat-message">
-        {{ message.message }}
-      </div>
+        <div class="chat-message">
+          {{ message.message }}
+          {% if message.message_image %}
+          <img src="{{ message.message_image.url }}" alt="Image" style="max-width: 200px; margin-top: 10px;">
+          {% else %}
+          {% endif %}
+        </div>
       {% endfor %}
     </div>
 
     <!-- Chat Footer -->
     <div class="chat-footer">
       <input name="message" type="text" id="chat-input" placeholder="Type a message..." class="form-control">
-      <button id="send-btn" class="btn btn-primary">Send</button>
+      <label for="image-upload" class="btn btn-primary" style="margin-left: 5px; padding: 5px; cursor: pointer;">📷</label>
+      <input type="file" name="message_image" id="image-upload" accept="image/*" style="display: none;">
+      <button type="submit" id="send-btn" class="btn btn-primary">Send</button>
     </div>
   </div>
 </form>
+
   
 <div class="dashboard-height">
     <div class="welcome-greetings-section">

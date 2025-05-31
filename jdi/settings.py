@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 import os
 
@@ -76,15 +77,23 @@ WSGI_APPLICATION = 'jdi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'your_real_password',
+#         'HOST': 'postgres.railway.internal',
+#         'PORT': '5432',
+#     }
+# }
+
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'lpffTcHXWZRrhbxiKzoGcVMLBLYpYJIE',
-        'HOST': 'junction.proxy.rlwy.net',
-        'PORT': '18506',
-    }
+    'default': dj_database_url.parse(
+        'postgresql://postgres:rybLukxuXRgpBXCXQKqvdPAzdXfGxpeb@shinkansen.proxy.rlwy.net:19996/railway'
+    )
 }
 
 

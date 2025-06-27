@@ -90,16 +90,19 @@ WSGI_APPLICATION = 'jdi.wsgi.application'
 
 
 
+from decouple import config
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.spsdrtilroqucqrhuncb',
-        'PASSWORD': 'xHvdL9sAWb*r35T',
-        'HOST': 'aws-0-eu-west-3.pooler.supabase.com',
-        'PORT': '5432',  # Or 6543 for transaction pooler
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
+
 
 
 

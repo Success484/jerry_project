@@ -91,10 +91,16 @@ WSGI_APPLICATION = 'jdi.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        'postgresql://postgres:rybLukxuXRgpBXCXQKqvdPAzdXfGxpeb@shinkansen.proxy.rlwy.net:19996/railway'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.spsdrtilroqucqrhuncb',
+        'PASSWORD': 'xHvdL9sAWb*r35T',
+        'HOST': 'aws-0-eu-west-3.pooler.supabase.com',
+        'PORT': '5432',  # Or 6543 for transaction pooler
+    }
 }
+
 
 
 # DATABASES = {
